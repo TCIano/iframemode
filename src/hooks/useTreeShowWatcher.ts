@@ -1,6 +1,6 @@
-import type BasicChart from 'src/components/BasicChart.vue'
-
 import { inject, nextTick, type Ref, watch } from 'vue'
+
+import type BasicChart from '@/components/BasicChart.vue'
 
 /**
  * 混入echarts手动更新布局方法

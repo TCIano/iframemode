@@ -75,7 +75,7 @@ let timer: null | ReturnType<typeof setTimeout> = null
 const init = async () => {
   echartInstance = useEcharts(comChart.value as HTMLDivElement)
   echartInstance.on('finished', () => {
-    setTimeout(() => {
+    timer = setTimeout(() => {
       spinning.value = false
     }, 100)
   })

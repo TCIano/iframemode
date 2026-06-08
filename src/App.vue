@@ -51,7 +51,6 @@ const router = useRouter()
 const collapsed = ref<boolean>(false)
 const selectedKeys = ref<string[]>([])
 const isProd = import.meta.env.PROD //是否为生产环境
-console.log(isProd)
 
 const onItemClick = ({ key }: typeof MenuItem) => {
   router.push(key as string)
