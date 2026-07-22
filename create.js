@@ -1,0 +1,88 @@
+#!/usr/bin/env node
+
+import { execSync } from 'child_process'
+import { existsSync, readFileSync, writeFileSync, readdirSync, statSync, mkdirSync, rmSync } from 'fs'
+import { join, resolve, relative } from 'path'
+import { createInterface } from 'readline'
+import { fileURLToPath } from 'url'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+const TEMPLATE_DIR = resolve(__dirname)
+
+// ── helpers ──────────────────────────────────────────────
+
+function ask(query) {
+  const rl = createInterface({ input: process.stdin, output: process.stdout })
+  return new Promise(resolve => rl.question(query, answer => { rl.close(); resolve(answer.trim()) }))
+}
+
+function copy(src, dest, filter) {
+  const entries = readdirSync(src, { withFileTypes: true })
+  mkdirSync(dest, { recursive: true })
+  for (const e of entries) {
+    const s = join(src, e.name), d = join(dest, e.name)
+    if (filter && !filter(s, e)) continue
+    if (e.isDirectory()) copy(s, d, filter)
+    else writeFileSync(d, readFileSync(s))
+  }
+}
+
+// ── main ─────────────────────────────────────────────────
+
+async function main() {
+  const projectName = process.argv[2] || await ask('Project name: ')
+  if (!projectName) {
+    console.error('Project name required.')
+    process.exit(1)
+  }
+
+  const dest = resolve(process.cwd(), projectName)
+  if (existsSync(dest)) {
+    console.error(`"${projectName}" already exists.`)
+    process.exit(1)
+  }
+
+  const IGNORE = new Set([
+    '.git', 'node_modules', 'dist', '.idea',
+    'package-lock.json', 'create.js',
+  ])
+
+  const filter = (fp, entry) => {
+    if (IGNORE.has(entry.name)) return false
+    if (entry.name.endsWith('.tsbuildinfo')) return false
+    return true
+  }
+
+  // 1. copy template
+  console.log(`\n  Creating project "${projectName}"...`)
+  copy(TEMPLATE_DIR, dest, filter)
+  console.log('  ✔ Template copied')
+
+  // 2. patch package.json
+  const pkgPath = join(dest, 'package.json')
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'))
+  pkg.name = projectName
+  pkg.version = '0.0.0'
+  pkg.private = true
+  writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+  console.log('  ✔ package.json updated')
+
+  // 3. init git
+  console.log('  Initializing git...')
+  execSync('git init', { cwd: dest, stdio: 'inherit' })
+  execSync('git add .', { cwd: dest, stdio: 'inherit' })
+  execSync('git commit -m "chore: init from iframeMode-template"', { cwd: dest, stdio: 'inherit' })
+  console.log('  ✔ Git initialized')
+
+  // 4. install deps
+  console.log('  Installing dependencies...')
+  execSync('npm install', { cwd: dest, stdio: 'inherit' })
+  console.log('  ✔ Dependencies installed')
+
+  console.log(`\n  ── Done ──\n  cd ${projectName}\n  npm run dev\n`)
+}
+
+main().catch(err => {
+  console.error(err)
+  process.exit(1)
+})
