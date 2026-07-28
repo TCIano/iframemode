@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 
+import type { TTagHistoryItem } from '@/types/report'
+
 import { getTagHistoryTrendApi } from '@/api/report'
 
 const getTagHistory = async (
@@ -29,7 +31,7 @@ export const useGetTrendOpt = async (
           color: '#dae3f5',
         },
         data:
-          res?.map((item) => [
+          res?.map((item: TTagHistoryItem) => [
             dayjs(item.timeStamp).format('YYYY-MM-DD HH:mm:ss'),
             item.data,
           ]) || [],
@@ -38,7 +40,7 @@ export const useGetTrendOpt = async (
         symbol: 'none',
         type: 'line',
       }
-    } catch (e) {
+    } catch {
       return
     }
   })

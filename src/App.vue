@@ -12,7 +12,7 @@
           @click="onItemClick"
         >
           <a-menu-item v-for="menu in routes" :key="menu.path">
-            {{ menu.meta.title }}
+            {{ menu.meta?.title }}
           </a-menu-item>
         </a-menu>
       </a-layout-sider>
@@ -53,7 +53,7 @@ const selectedKeys = ref<string[]>([])
 const isProd = import.meta.env.PROD //是否为生产环境
 
 const onItemClick = ({ key }: typeof MenuItem) => {
-  router.push(key as string)
+  void router.push(key as string)
 }
 </script>
 
