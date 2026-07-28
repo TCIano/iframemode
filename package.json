@@ -13,7 +13,10 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,vue,css,less}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "gen:api": "plop api",
+    "gen:page": "plop page",
+    "gen:component": "plop component"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
@@ -44,6 +47,7 @@
     "eslint-plugin-vue": "^9.26.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "plop": "^4.0.5",
     "prettier": "^3.2.5",
     "typescript": "~5.3.0",
     "typescript-eslint": "^8.0.0-alpha.20",

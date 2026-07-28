@@ -1,0 +1,25 @@
+import request from '@/utils/request'
+import type { T{{pascalCase name}}Info } from '@/types/{{name}}'
+import type { T{{pascalCase name}}ListReq, T{{pascalCase name}}ListResp } from '@/types/{{name}}'
+
+const PREFIX = '/{{name}}'
+
+export function fetch{{pascalCase name}}List(params: T{{pascalCase name}}ListReq) {
+  return request.get<T{{pascalCase name}}ListResp>(`${PREFIX}/list`, { params })
+}
+
+export function fetch{{pascalCase name}}Detail(id: number) {
+  return request.get<T{{pascalCase name}}Info>(`${PREFIX}/${id}`)
+}
+
+export function create{{pascalCase name}}(data: {}) {
+  return request.post<T{{pascalCase name}}Info>(PREFIX, data)
+}
+
+export function update{{pascalCase name}}(id: number, data: Partial<{}>) {
+  return request.put<T{{pascalCase name}}Info>(`${PREFIX}/${id}`, data)
+}
+
+export function delete{{pascalCase name}}(id: number) {
+  return request.delete(`${PREFIX}/${id}`)
+}

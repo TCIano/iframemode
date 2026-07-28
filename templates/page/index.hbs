@@ -1,0 +1,50 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+// types
+
+/** props */
+interface {{pascalCase name}}Props {
+  // TODO: add props
+}
+
+const props = withDefaults(defineProps<{{pascalCase name}}Props>(), {
+  // TODO: add defaults
+})
+
+/** emits */
+const emit = defineEmits<{
+  (e: 'update'): void
+}>()
+
+/** state */
+const loading = ref(false)
+const data = ref<unknown[]>([])
+
+/** methods */
+async function fetchData() {
+  loading.value = true
+  try {
+    // TODO: call API
+  } finally {
+    loading.value = false
+  }
+}
+
+/** lifecycle */
+onMounted(() => {
+  fetchData()
+})
+</script>
+
+<template>
+  <div class="{{kebabCase name}}_wrapper">
+    <!-- TODO: implement -->
+  </div>
+</template>
+
+<style scoped lang="less">
+.{{kebabCase name}}_wrapper {
+  // TODO: add styles
+}
+</style>

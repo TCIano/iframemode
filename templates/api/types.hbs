@@ -1,0 +1,26 @@
+import type { TApiResponse, TPaginationReq } from './common'
+
+/** 模块公共基类 — 所有该模块接口继承此类型 */
+type T{{pascalCase name}}Base = {
+  id: number
+  createdAt: string
+  updatedAt: string
+}
+
+/** 单条数据 */
+type T{{pascalCase name}}Info = T{{pascalCase name}}Base & {
+  // TODO: add fields
+}
+
+/** 列表查询参数 */
+type T{{pascalCase name}}ListReq = TPaginationReq & {
+  // TODO: add filter fields
+}
+
+/** 列表响应 */
+type T{{pascalCase name}}ListResp = TApiResponse & {
+  data: T{{pascalCase name}}Info[]
+  totalSize: number
+}
+
+export type { T{{pascalCase name}}Base, T{{pascalCase name}}Info, T{{pascalCase name}}ListReq, T{{pascalCase name}}ListResp }
