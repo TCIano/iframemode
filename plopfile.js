@@ -49,22 +49,22 @@ export default function (plop) {
       return [
         {
           type: 'add',
-          path: 'src/views/{{name}}/index.vue',
+          path: 'src/views/{{camelCase name}}/index.vue',
           templateFile: 'templates/page/index.hbs',
         },
         {
           type: 'add',
-          path: 'src/views/{{name}}/hooks/use{{pascalCase name}}.ts',
+          path: 'src/views/{{camelCase name}}/hooks/use{{pascalCase name}}.ts',
           templateFile: 'templates/page/hook.hbs',
         },
         {
           type: 'add',
-          path: 'src/views/{{name}}/services/{{name}}.ts',
+          path: 'src/views/{{camelCase name}}/services/{{camelCase name}}.ts',
           templateFile: 'templates/page/service.hbs',
         },
         {
           type: 'add',
-          path: 'src/views/{{name}}/components/.gitkeep',
+          path: 'src/views/{{camelCase name}}/components/.gitkeep',
           template: '',
         },
       ]
