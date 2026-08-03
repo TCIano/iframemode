@@ -92,7 +92,7 @@ defineExpose({ reload, reset })
 ## HTTP 请求（Axios）
 
 - 统一通过 `src/utils/request.ts` 创建的 Axios 实例
-- 后端返回格式：`{ code, message, data }`（200 成功）；分页数据独立为 `TPageResult<T> = { list, total }`
+- 后端返回格式：`{ code, message, data }`（200 成功）；分页数据独立为 `TPageResult<T> = { list, page, pageSize, total, totalPage }`
 - 开发环境自动打印错误日志
 - `baseURL` 通过 `import.meta.env.VITE_BASE_URL` 配置
 
