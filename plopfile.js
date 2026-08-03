@@ -11,7 +11,6 @@ export default function (plop) {
     actions: (data) => {
       const name = data?.name
       if (!name) throw new Error('模块名不能为空')
-
       return [
         {
           type: 'add',
@@ -38,7 +37,7 @@ export default function (plop) {
 
   // ── 页面模块 ──────────────────────────────────────────
   plop.setGenerator('page', {
-    description: '生成页面（views/xxx/ + hooks + services）',
+    description: '生成页面（views/xxx/ + hooks + components）',
     prompts: [
       { type: 'input', name: 'name', message: '页面名（如 user-list）：' },
     ],
@@ -56,11 +55,6 @@ export default function (plop) {
           type: 'add',
           path: 'src/views/{{camelCase name}}/hooks/use{{pascalCase name}}.ts',
           templateFile: 'templates/page/hook.hbs',
-        },
-        {
-          type: 'add',
-          path: 'src/views/{{camelCase name}}/services/{{camelCase name}}.ts',
-          templateFile: 'templates/page/service.hbs',
         },
         {
           type: 'add',

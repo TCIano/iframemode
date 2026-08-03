@@ -12,7 +12,7 @@
 ```
 fetch{Resource}{Action}  — 资源名 + 操作，camelCase
 
-✅ fetchUserList, fetchUserDetail, createUser, updateUser, deleteUser
+✅ fetchUserListApi, fetchUserDetailApi, createUserApi, updateUserApi, deleteUserApi
 ❌ getUserData, api_user_list, requestForUsers
 ```
 
@@ -35,20 +35,29 @@ fetch{Resource}{Action}  — 资源名 + 操作，camelCase
 - 请求参数类型统一加 `Req` 后缀：`TUserListReq`
 - 后端响应体类型统一加 `Resp` 后缀：`TUserListResp`
 - 后端响应中的单条数据类型不加后缀：`TUserInfo`
+- api 层请求函数统一加 `Api` 后缀：`fetchUserListApi`（与 hooks / store action 同名区分）
 - 后端返回格式假设（文档用，非强制约定）：
 
 ```typescript
 // src/types/common.ts
-/** 后端统一返回格式（与 request.ts 拦截器对齐） */
-interface TApiResponse<T = unknown> {
+/** 后端统一响应格式（主流：code + message + data） */
+type TApiResponse<T = unknown> = {
+  /** 业务状态码，200 表示成功 */
+  code: number
+  /** 响应数据（成功时承载业务数据，失败时可为 null） */
   data: T
-  errMsg?: string
-  result?: number
-  totalSize?: number
+  /** 状态描述 */
+  message: string
+}
+
+/** 分页结果（独立于基础响应，仅列表接口使用） */
+type TPageResult<T> = {
+  list: T[]
+  total: number
 }
 
 /** 分页请求通用参数 */
-interface TPaginationReq {
+type TPaginationReq = {
   page: number
   pageSize: number
 }
@@ -60,7 +69,7 @@ interface TPaginationReq {
 src/types/
 ├── user.ts       ← 用户模块：TUserBase, TUserInfo, TUserListReq, TUserListResp
 ├── report.ts     ← 报表模块：TReportBase, TReportItem, TReportListReq
-└── common.ts     ← 全局通用：TPaginationReq, TApiResponse
+└── common.ts     ← 全局通用：TPaginationReq, TApiResponse, TPageResult
 ```
 
 ### 类型继承（与 03-代码约束.md 对齐）
@@ -84,10 +93,7 @@ type TUserListReq = TPaginationReq & {
   keyword?: string
 }
 
-type TUserListResp = TApiResponse & {
-  data: TUserInfo[]
-  totalSize: number
-}
+type TUserListResp = TApiResponse<TPageResult<TUserInfo>>
 ```
 
 ---
@@ -111,24 +117,24 @@ import request from '@/utils/request'
 
 const PREFIX = '/user'
 
-export function fetchUserList(params: TUserListReq) {
+export function fetchUserListApi(params: TUserListReq) {
   return request.get<TUserListResp>(`${PREFIX}/list`, { params })
 }
 
-export function fetchUserDetail(id: number) {
-  return request.get<TUserInfo>(`${PREFIX}/${id}`)
+export function fetchUserDetailApi(id: number) {
+  return request.get<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`)
 }
 
-export function createUser(data: TCreateUserReq) {
-  return request.post<TUserInfo>(PREFIX, data)
+export function createUserApi(data: TCreateUserReq) {
+  return request.post<TApiResponse<TUserInfo>>(PREFIX, data)
 }
 
-export function updateUser(id: number, data: Partial<TCreateUserReq>) {
-  return request.put<TUserInfo>(`${PREFIX}/${id}`, data)
+export function updateUserApi(id: number, data: Partial<TCreateUserReq>) {
+  return request.put<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`, data)
 }
 
-export function deleteUser(id: number) {
-  return request.delete(`${PREFIX}/${id}`)
+export function deleteUserApi(id: number) {
+  return request.delete<TApiResponse>(`${PREFIX}/${id}`)
 }
 ```
 
@@ -138,13 +144,13 @@ export function deleteUser(id: number) {
 
 ## 4. 错误处理策略（前端侧）
 
-| 场景                      | 前端处理方式                      |
-| ------------------------- | --------------------------------- |
-| 网络错误                  | `request.ts` 统一拦截，全局提示   |
-| 401 未登录                | `request.ts` 统一拦截，跳转登录页 |
-| 403 无权限                | 调用方自行 catch，提示"无权限"    |
-| 业务错误（`errMsg` 存在） | 调用方按需处理或抛给统一提示      |
-| 表单提交错误              | 调用方 catch，回填表单错误信息    |
+| 场景                       | 前端处理方式                                                     |
+| -------------------------- | ---------------------------------------------------------------- |
+| 网络错误                   | `request.ts` 统一拦截，全局提示                                  |
+| 401 未登录                 | `request.ts` 统一拦截，跳转登录页                                |
+| 403 无权限                 | 调用方自行 catch，提示"无权限"                                   |
+| 业务错误（`code !== 200`） | `request.ts` 统一提示 message 并 reject，调用方可 catch 补充分支 |
+| 表单提交错误               | 调用方 catch，回填表单错误信息                                   |
 
 - API 层（`src/api/xxx.ts`）不 catch 错误
 - 只在需要特殊处理的页面/组件内 catch

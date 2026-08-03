@@ -32,12 +32,12 @@ const emit = defineEmits<Emit>()
 const fileList = ref<UploadProps['fileList']>([])
 
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
-  const accept = props.accept.split(',').map((item) => item.trim()) //去除每项的空格
+  const accept = props.accept.split(',').map((item) => item.trim()) // 去除每项空格
   const typeOk = accept.includes(file.type)
   if (!typeOk) {
     message.warning('接受的文件类型为' + props.accept)
   } else {
-    //上传
+    // 上传
     const formData = new FormData()
     fileList.value = [file]
     fileList.value.forEach((item) => {

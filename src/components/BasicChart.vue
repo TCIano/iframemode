@@ -42,18 +42,6 @@ const style = ref<HTMLAttributes>(props.styleOp)
 const comChart = ref<HTMLDivElement | null>(null)
 const spinning = ref<boolean>(true)
 
-// watch(
-//   () => props.styleOp,
-//   (value) => {
-//     style.value = value
-//     nextTick(() => {
-//       echartInstance && echartInstance.resize()
-//     })
-//   },
-//   {
-//     immediate: true,
-//   },
-// )
 watch(
   () => props.option,
   (value) => {
@@ -62,10 +50,6 @@ watch(
     } else {
       init()
     }
-    // disposeDom()
-    // init()
-    //数据改变时候也重新触发
-    // resize()
   },
 )
 
@@ -80,9 +64,7 @@ const init = async () => {
     }, 100)
   })
 
-  //触发点击事件
   echartInstance.getZr().on('click', (params: any) => {
-    //获取点击位置的像素坐标
     const pointInPixel = [params.offsetX, params.offsetY]
     if (echartInstance.containPixel('grid', pointInPixel)) {
       emit('onAxisClick', params)
@@ -107,11 +89,7 @@ const resize = () => {
   echartInstance.resize()
 }
 const setWidth = () => {
-  const dom = document.querySelector('#comChart')
-  //修改宽度
-  // if (dom) {
-  //   dom.style.width = '300px'
-  // }
+  // TODO: 按需实现宽度调整
 }
 defineExpose({
   disposeDom,
@@ -125,10 +103,8 @@ defineExpose({
 onMounted(() => {
   init()
 })
-//缓存过后重新设置样式
-onActivated(() => {
-  // resize()
-})
+// 缓存激活时按需重设样式
+onActivated(() => {})
 
 onBeforeUnmount(() => {
   if (timer) {

@@ -70,8 +70,6 @@ const onShowTree = () => {
 
     .tree-content-card_wrapper {
       height: calc(100vh - 20px);
-      //overflow-y: auto;
-      //scrollbar-width: none;
     }
   }
 

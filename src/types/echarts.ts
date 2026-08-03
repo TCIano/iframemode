@@ -1,6 +1,5 @@
 import * as echarts from 'echarts'
-// import * as echarts from 'echarts/core'
-//按需引入
+// 按需引入各模块类型
 import type {
   BarSeriesOption,
   LineSeriesOption,
@@ -18,6 +17,7 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components'
 
+/** 图表配置项类型（按需引入各模块的组合） */
 type chartOption = echarts.ComposeOption<
   | BarSeriesOption
   | DatasetComponentOption
@@ -32,11 +32,5 @@ type chartOption = echarts.ComposeOption<
   | TitleComponentOption
   | TooltipComponentOption
 >
-//按需引入
-
-//全部引入
-// type chartOption = echarts.SeriesOption &
-//   echarts.EChartOption &
-//   echarts.VisualMapComponentOption
 
 export type { chartOption }

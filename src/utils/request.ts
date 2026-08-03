@@ -1,51 +1,67 @@
-import type { AxiosResponse } from 'axios'
+import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 import { message } from 'ant-design-vue'
 import Axios from 'axios'
 
-export interface Response {
-  data: any
-  errMsg: string
-  result: boolean
-  totalSize: 0 | number
-}
+import type { TApiResponse } from '@/types/common'
 
-const baseURL = import.meta.env.VITE_BASE_URL
 const axiosInstance = Axios.create({
-  // baseURL,
+  // baseURL: import.meta.env.VITE_BASE_URL, // 后端地址就绪后放开
   timeout: 15000,
-  withCredentials: true, // 跨域请求时发送cookie
+  withCredentials: true, // 跨域请求时发送 cookie
 })
 
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      message.error(response.data.errMsg)
-      throw new Error(response.status.toString())
+  (response: AxiosResponse<TApiResponse>) => {
+    if (response.data.code !== 200) {
+      message.error(response.data.message || '请求失败')
+      return Promise.reject(new Error(response.data.message || '请求失败'))
     }
+    return response
   },
-  (error) => {
+  (error: unknown) => {
     if (import.meta.env.MODE === 'development') {
       console.log(error)
     }
-    return Promise.reject({ code: 500, msg: '服务器异常，请稍后重试…' })
+    return Promise.reject(new Error('服务器异常，请稍后重试…'))
   },
 )
 
 /**
- * 包装 axios 实例，修正返回类型。
- * 拦截器已把 AxiosResponse 解包为裸 body，所以 request.get<T> 直接返回 Promise<T>。
+ * 包装 axios 实例：AxiosResponse 携带后端统一结构 TApiResponse，
+ * 方法层解包 .data 后按 TBody（完整响应体）返回。
  */
 const request = {
-  delete: (url: string, config?: any) => axiosInstance.delete(url, config),
-  get: <T = any>(url: string, config?: any): Promise<T> =>
-    axiosInstance.get(url, config),
-  post: <T = any>(url: string, data?: any, config?: any): Promise<T> =>
-    axiosInstance.post(url, data, config),
-  put: <T = any>(url: string, data?: any, config?: any): Promise<T> =>
-    axiosInstance.put(url, data, config),
+  delete: <TBody = TApiResponse>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<TBody> =>
+    axiosInstance
+      .delete<TApiResponse>(url, config)
+      .then((response) => response.data as TBody),
+  get: <TBody = TApiResponse>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<TBody> =>
+    axiosInstance
+      .get<TApiResponse>(url, config)
+      .then((response) => response.data as TBody),
+  post: <TBody = TApiResponse>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
+  ): Promise<TBody> =>
+    axiosInstance
+      .post<TApiResponse>(url, data, config)
+      .then((response) => response.data as TBody),
+  put: <TBody = TApiResponse>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
+  ): Promise<TBody> =>
+    axiosInstance
+      .put<TApiResponse>(url, data, config)
+      .then((response) => response.data as TBody),
 }
 
 export default request

@@ -50,7 +50,7 @@ const locale = ref(zhCN)
 const router = useRouter()
 const collapsed = ref<boolean>(false)
 const selectedKeys = ref<string[]>([])
-const isProd = import.meta.env.PROD //是否为生产环境
+const isProd = import.meta.env.PROD
 
 const onItemClick = ({ key }: typeof MenuItem) => {
   void router.push(key as string)

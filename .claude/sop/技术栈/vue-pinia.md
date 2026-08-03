@@ -30,7 +30,7 @@ src/stores/
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { TUserInfo } from '@/types/user'
-import { fetchUserList, fetchUserDetail } from '@/api/user'
+import { fetchUserDetailApi, fetchUserListApi } from '@/api/user'
 
 export const useUserStore = defineStore('user', () => {
   // ── state ──
@@ -42,15 +42,15 @@ export const useUserStore = defineStore('user', () => {
   async function fetchList(params: { page: number }) {
     loading.value = true
     try {
-      const res = await fetchUserList(params)
-      list.value = res.data
+      const res = await fetchUserListApi(params)
+      list.value = res.data.list
     } finally {
       loading.value = false
     }
   }
 
   async function fetchDetail(id: number) {
-    const res = await fetchUserDetail(id)
+    const res = await fetchUserDetailApi(id)
     current.value = res.data
   }
 
@@ -80,7 +80,7 @@ const list = ref<UserInfo[]>([])
 const list = shallowRef<UserInfo[]>([])
 // 更新：直接整体赋值（不涉及深层属性变更）
 const res = await fetchList(params)
-list.value = res.data
+list.value = res.data.list
 ```
 
 **经验法则：** store 里存放"服务端兜底数据"（列表、字典、配置）优先 `shallowRef`。需要深层响应（表单对象、当前编辑项）才用 `ref`。

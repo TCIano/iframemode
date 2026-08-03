@@ -92,7 +92,7 @@ defineExpose({ reload, reset })
 ## HTTP 请求（Axios）
 
 - 统一通过 `src/utils/request.ts` 创建的 Axios 实例
-- 后端返回格式：`{ data, errMsg, result, totalSize }`
+- 后端返回格式：`{ code, message, data }`（200 成功）；分页数据独立为 `TPageResult<T> = { list, total }`
 - 开发环境自动打印错误日志
 - `baseURL` 通过 `import.meta.env.VITE_BASE_URL` 配置
 
@@ -107,16 +107,16 @@ import type { TUserListReq, TUserListResp, TUserInfo } from '@/types/user'
 
 const PREFIX = '/user'
 
-export function fetchUserList(params: TUserListReq) {
+export function fetchUserListApi(params: TUserListReq) {
   return request.get<TUserListResp>(`${PREFIX}/list`, { params })
 }
 
-export function fetchUserDetail(id: number) {
-  return request.get<TUserInfo>(`${PREFIX}/${id}`)
+export function fetchUserDetailApi(id: number) {
+  return request.get<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`)
 }
 
-export function createUser(data: Partial<TUserInfo>) {
-  return request.post<TUserInfo>(PREFIX, data)
+export function createUserApi(data: Partial<TUserInfo>) {
+  return request.post<TApiResponse<TUserInfo>>(PREFIX, data)
 }
 ```
 

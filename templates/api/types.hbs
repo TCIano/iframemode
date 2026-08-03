@@ -1,4 +1,4 @@
-import type { TApiResponse, TPaginationReq } from './common'
+import type { TApiResponse, TPageResult, TPaginationReq } from './common'
 
 /** 模块公共基类 — 所有该模块接口继承此类型 */
 type T{{pascalCase name}}Base = {
@@ -18,9 +18,6 @@ type T{{pascalCase name}}ListReq = TPaginationReq & {
 }
 
 /** 列表响应 */
-type T{{pascalCase name}}ListResp = TApiResponse & {
-  data: T{{pascalCase name}}Info[]
-  totalSize: number
-}
+type T{{pascalCase name}}ListResp = TApiResponse<TPageResult<T{{pascalCase name}}Info>>
 
 export type { T{{pascalCase name}}Base, T{{pascalCase name}}Info, T{{pascalCase name}}ListReq, T{{pascalCase name}}ListResp }

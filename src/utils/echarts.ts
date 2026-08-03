@@ -1,5 +1,5 @@
 import * as echarts from 'echarts/core'
-//按需引入
+// 按需引入各模块
 import {
   BarChart,
   CustomChart,

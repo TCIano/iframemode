@@ -57,7 +57,7 @@ Vue 3 + TypeScript + Ant Design Vue 企业级模板。
 | 命令                             | 生成内容                              | 对应 SOP                                 |
 | -------------------------------- | ------------------------------------- | ---------------------------------------- |
 | `npm run gen:api <模块名>`       | `src/api/xxx.ts` + `src/types/xxx.ts` | 06-api设计规范 + 03-代码约束（类型继承） |
-| `npm run gen:page <页面名>`      | `src/views/xxx/` + hooks + services   | 技术栈/vue-ant-design（目录结构）        |
+| `npm run gen:page <页面名>`      | `src/views/xxx/` + hooks + components | 技术栈/vue-ant-design（目录结构）        |
 | `npm run gen:component <组件名>` | `src/components/Xxx.vue`              | 07-组件设计规范 + 技术栈（组件写法）     |
 
 示例：
@@ -67,7 +67,7 @@ npm run gen:api -- report
 # → 生成 src/api/report.ts + src/types/report.ts（含 TReportBase、Omit/Pick 继承骨架）
 
 npm run gen:page -- user-list
-# → 生成 src/views/user-list/index.vue + hooks + services
+# → 生成 src/views/user-list/index.vue + hooks + components
 
 npm run gen:component -- BasicTable
 # → 生成 src/components/BasicTable.vue（含 Props/Emits/WithDefaults 骨架）
