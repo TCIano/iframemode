@@ -17,11 +17,11 @@ import { UploadOutlined } from '@ant-design/icons-vue'
 import { message, type UploadProps } from 'ant-design-vue'
 import { ref } from 'vue'
 
-interface BasicUploadProps {
+type BasicUploadProps = {
   accept?: string
 }
 
-interface BasicUploadEmit {
+type BasicUploadEmit = {
   (e: 'handleUpload', fileList: FormData): void
 }
 

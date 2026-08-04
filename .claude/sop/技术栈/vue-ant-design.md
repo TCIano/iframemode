@@ -124,7 +124,7 @@ export function createUserApi(data: Partial<TUserInfo>) {
 
 - 通过 `src/utils/echarts.ts` 按需注册组件
 - 不要直接 `import * as echarts from 'echarts'`
-- 图表类型定义用 `src/types/echarts.ts` 中的 `chartOption`
+- 图表类型定义用 `src/types/echarts.ts` 中的 `TChartOption`
 - 图表 option 的构造逻辑封装在 `src/hooks/` 中
 
 ## 路由

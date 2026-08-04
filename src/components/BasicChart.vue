@@ -17,12 +17,12 @@ import type { TChartOption } from '@/types/echarts'
 
 import useEcharts from '@/hooks/useEcharts'
 
-interface BasicChartProps {
+type BasicChartProps = {
   option: TChartOption
   styleOp?: CSSProperties
 }
 
-interface BasicChartEmit {
+type BasicChartEmit = {
   (e: 'onAxisClick', params: ElementEvent): void
 }
 
