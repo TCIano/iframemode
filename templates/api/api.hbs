@@ -1,6 +1,11 @@
 import type { TApiResponse } from '@/types/common'
-import type { T{{pascalCase name}}Info } from '@/types/{{name}}'
-import type { T{{pascalCase name}}ListReq, T{{pascalCase name}}ListResp } from '@/types/{{name}}'
+import type {
+  T{{pascalCase name}}CreateReq,
+  T{{pascalCase name}}Info,
+  T{{pascalCase name}}ListReq,
+  T{{pascalCase name}}ListResp,
+  T{{pascalCase name}}UpdateReq,
+} from '@/types/{{name}}'
 
 import request from '@/utils/request'
 
@@ -14,11 +19,11 @@ export function fetch{{pascalCase name}}DetailApi(id: number) {
   return request.get<TApiResponse<T{{pascalCase name}}Info>>(`${PREFIX}/${id}`)
 }
 
-export function create{{pascalCase name}}Api(data: {}) {
+export function create{{pascalCase name}}Api(data: T{{pascalCase name}}CreateReq) {
   return request.post<TApiResponse<T{{pascalCase name}}Info>>(PREFIX, data)
 }
 
-export function update{{pascalCase name}}Api(id: number, data: Partial<{}>) {
+export function update{{pascalCase name}}Api(id: number, data: T{{pascalCase name}}UpdateReq) {
   return request.put<TApiResponse<T{{pascalCase name}}Info>>(`${PREFIX}/${id}`, data)
 }
 

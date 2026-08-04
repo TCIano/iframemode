@@ -17,7 +17,22 @@ type T{{pascalCase name}}ListReq = TPaginationReq & {
   // TODO: add filter fields
 }
 
+/** 新增请求参数 */
+type T{{pascalCase name}}CreateReq = {
+  // TODO: add fields
+}
+
+/** 编辑请求参数（部分字段更新） */
+type T{{pascalCase name}}UpdateReq = Partial<T{{pascalCase name}}CreateReq>
+
 /** 列表响应 */
 type T{{pascalCase name}}ListResp = TApiResponse<TPageResult<T{{pascalCase name}}Info>>
 
-export type { T{{pascalCase name}}Base, T{{pascalCase name}}Info, T{{pascalCase name}}ListReq, T{{pascalCase name}}ListResp }
+export type {
+  T{{pascalCase name}}Base,
+  T{{pascalCase name}}CreateReq,
+  T{{pascalCase name}}Info,
+  T{{pascalCase name}}ListReq,
+  T{{pascalCase name}}ListResp,
+  T{{pascalCase name}}UpdateReq,
+}

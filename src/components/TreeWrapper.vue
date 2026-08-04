@@ -47,7 +47,7 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue'
 import { h, provide, ref } from 'vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     isShowBtn?: boolean
   }>(),

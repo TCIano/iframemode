@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { execSync } from 'child_process'
-import { existsSync, readFileSync, writeFileSync, readdirSync, statSync, mkdirSync, rmSync } from 'fs'
-import { join, resolve, relative } from 'path'
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { join, resolve } from 'path'
 import { createInterface } from 'readline'
 import { fileURLToPath } from 'url'
 
@@ -20,7 +20,7 @@ function copy(src, dest, filter) {
   const entries = readdirSync(src, { withFileTypes: true })
   mkdirSync(dest, { recursive: true })
   for (const e of entries) {
-    const s = join(src, e.name), d = join(dest, e.name)
+    const d = join(dest, e.name), s = join(src, e.name)
     if (filter && !filter(s, e)) continue
     if (e.isDirectory()) copy(s, d, filter)
     else writeFileSync(d, readFileSync(s))
@@ -43,8 +43,8 @@ async function main() {
   }
 
   const IGNORE = new Set([
-    '.git', 'node_modules', 'dist', '.idea',
-    'package-lock.json', 'create.js',
+    '.git', '.idea', 'create.js', 'dist',
+    'node_modules', 'package-lock.json', 'pnpm-lock.yaml',
   ])
 
   const filter = (fp, entry) => {

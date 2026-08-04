@@ -5,42 +5,39 @@
 </template>
 
 <script lang="ts" setup>
-import { dispose } from 'echarts/core'
 import {
-  type HTMLAttributes,
-  onActivated,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-  withDefaults,
-} from 'vue'
+  dispose,
+  type ECharts,
+  type ElementEvent,
+  type SetOptionOpts,
+} from 'echarts/core'
+import { type CSSProperties, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-import type { chartOption } from '@/types/echarts'
+import type { TChartOption } from '@/types/echarts'
 
 import useEcharts from '@/hooks/useEcharts'
 
-interface Props {
-  option: any | chartOption
-  styleOp?: any
+interface BasicChartProps {
+  option: TChartOption
+  styleOp?: CSSProperties
 }
 
-interface Emit {
-  (e: 'onAxisClick', params: any): void
+interface BasicChartEmit {
+  (e: 'onAxisClick', params: ElementEvent): void
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  option: () => {
-    return {}
-  },
-  styleOp: () => {
-    return {}
-  },
+const props = withDefaults(defineProps<BasicChartProps>(), {
+  option: () => ({}),
+  styleOp: () => ({}),
 })
-const emit = defineEmits<Emit>()
-const style = ref<HTMLAttributes>(props.styleOp)
+const emit = defineEmits<BasicChartEmit>()
+const style = ref<CSSProperties>(props.styleOp)
 const comChart = ref<HTMLDivElement | null>(null)
 const spinning = ref<boolean>(true)
+
+let echartInstance: ECharts | null = null
+let resizeHandler: (() => void) | null = null
+let timer: null | ReturnType<typeof setTimeout> = null
 
 watch(
   () => props.option,
@@ -53,58 +50,54 @@ watch(
   },
 )
 
-let echartInstance: any = null
-let resizeHandler: (() => void) | null = null
-let timer: null | ReturnType<typeof setTimeout> = null
-const init = async () => {
-  echartInstance = useEcharts(comChart.value as HTMLDivElement)
+const init = () => {
+  if (!comChart.value) return
+  echartInstance = useEcharts(comChart.value)
   echartInstance.on('finished', () => {
     timer = setTimeout(() => {
       spinning.value = false
     }, 100)
   })
 
-  echartInstance.getZr().on('click', (params: any) => {
+  echartInstance.getZr().on('click', (params: ElementEvent) => {
     const pointInPixel = [params.offsetX, params.offsetY]
-    if (echartInstance.containPixel('grid', pointInPixel)) {
+    if (echartInstance?.containPixel('grid', pointInPixel)) {
       emit('onAxisClick', params)
     }
   })
   resizeHandler = () => {
-    echartInstance.resize()
+    echartInstance?.resize()
   }
   window.addEventListener('resize', resizeHandler)
-  echartInstance.setOption(await props.option)
+  echartInstance.setOption(props.option)
 }
+
 const disposeDom = () => {
-  if (echartInstance) {
-    dispose(comChart.value as HTMLElement)
+  if (comChart.value && echartInstance) {
+    dispose(comChart.value)
   }
   echartInstance = null
 }
-const updateOption = (data: any | chartOption, opt = {}) => {
+
+const updateOption = (data: TChartOption, opt: SetOptionOpts = {}) => {
   echartInstance?.setOption(data, opt)
 }
+
 const resize = () => {
-  echartInstance.resize()
+  echartInstance?.resize()
 }
-const setWidth = () => {
-  // TODO: 按需实现宽度调整
-}
+
 defineExpose({
   disposeDom,
   echartInstance,
   init,
   resize,
-  setWidth,
   updateOption,
 })
 
 onMounted(() => {
   init()
 })
-// 缓存激活时按需重设样式
-onActivated(() => {})
 
 onBeforeUnmount(() => {
   if (timer) {

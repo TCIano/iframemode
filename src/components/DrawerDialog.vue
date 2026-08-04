@@ -25,12 +25,10 @@ defineOptions({ name: 'DrawerDialog' })
 
 withDefaults(
   defineProps<{
-    contentHeight?: string
     title?: string
     width?: number
   }>(),
   {
-    contentHeight: '100vh',
     title: '操作',
     width: 378,
   },
@@ -72,7 +70,7 @@ defineExpose({ close, show, toggle })
 
 <style lang="less" scoped>
 .drawer-dialog-wrapper {
-  ::deep(.ant-drawer-body) {
+  :deep(.ant-drawer-body) {
     &::-webkit-scrollbar {
       display: none;
     }

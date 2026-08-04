@@ -2,7 +2,7 @@
 type TApiResponse<T = unknown> = {
   /** 业务状态码，200 表示成功 */
   code: number
-  /** 响应数据（成功时承载业务数据，失败时可为 null） */
+  /** 响应数据（业务层拿到的均为成功响应，data 必存在；失败响应在拦截器层被 reject） */
   data: T
   /** 状态描述 */
   message: string

@@ -18,7 +18,7 @@ import type {
 } from 'echarts/components'
 
 /** 图表配置项类型（按需引入各模块的组合） */
-type chartOption = echarts.ComposeOption<
+type TChartOption = echarts.ComposeOption<
   | BarSeriesOption
   | DatasetComponentOption
   | DataZoomComponentOption
@@ -33,4 +33,4 @@ type chartOption = echarts.ComposeOption<
   | TooltipComponentOption
 >
 
-export type { chartOption }
+export type { TChartOption }

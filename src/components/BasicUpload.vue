@@ -17,18 +17,18 @@ import { UploadOutlined } from '@ant-design/icons-vue'
 import { message, type UploadProps } from 'ant-design-vue'
 import { ref } from 'vue'
 
-interface Props {
+interface BasicUploadProps {
   accept?: string
 }
 
-interface Emit {
+interface BasicUploadEmit {
   (e: 'handleUpload', fileList: FormData): void
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<BasicUploadProps>(), {
   accept: 'image/*',
 })
-const emit = defineEmits<Emit>()
+const emit = defineEmits<BasicUploadEmit>()
 const fileList = ref<UploadProps['fileList']>([])
 
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
@@ -40,9 +40,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (file) => {
     // 上传
     const formData = new FormData()
     fileList.value = [file]
-    fileList.value.forEach((item) => {
-      formData.append('file', item as any)
-    })
+    formData.append('file', file)
     emit('handleUpload', formData)
   }
   return false
@@ -53,4 +51,4 @@ const handleRemove = () => {
 defineExpose({ handleRemove })
 </script>
 
-<style lang="less" name="BasicUpload" scoped></style>
+<style lang="less" scoped></style>

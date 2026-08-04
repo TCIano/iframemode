@@ -31,6 +31,21 @@ export default tseslint.config(
   },
   perfectionist.configs['recommended-alphabetical'],
   {
+    // create.js 为 Node 脚本，声明 Node 全局变量
+    files: ['create.js'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['src/**/*.ts', 'src/**/*.vue'],
+    plugins: {
+      '@typescript-eslint': tseslint.plugin,
+      vue: pluginVue,
+    },
     rules: {
       'vue/multi-word-component-names': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -59,6 +74,13 @@ export default tseslint.config(
         newlinesBetween: 'always',
         internalPattern: ['@/**'],
       }],
+    },
+  },
+  {
+    // ant-design-vue 插件类型与 Vue App.use 签名不兼容，入口豁免 unsafe-argument（放在规则主块之后覆盖生效）
+    files: ['src/main.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-argument': 'off',
     },
   },
   prettier,

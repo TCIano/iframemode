@@ -1,29 +1,85 @@
-import type { AxiosRequestConfig, AxiosResponse } from 'axios'
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios'
 
 import { message } from 'ant-design-vue'
 import Axios from 'axios'
 
 import type { TApiResponse } from '@/types/common'
 
+/** 登录态 token 在 localStorage 中的 key */
+const TOKEN_KEY = 'token'
+/** 401 未登录跳转地址（登录页就绪后改为实际路径，配合 hash 路由使用） */
+const LOGIN_PATH = '#/login'
+
+/** 业务错误：携带后端业务码/HTTP 状态码，调用方可按 code 区分处理 */
+export class ApiError extends Error {
+  code?: number
+
+  constructor(message: string, code?: number) {
+    super(message)
+    this.name = 'ApiError'
+    this.code = code
+  }
+}
+
+function getToken() {
+  return localStorage.getItem(TOKEN_KEY)
+}
+
+function clearToken() {
+  localStorage.removeItem(TOKEN_KEY)
+}
+
 const axiosInstance = Axios.create({
-  // baseURL: import.meta.env.VITE_BASE_URL, // 后端地址就绪后放开
+  baseURL: import.meta.env.VITE_BASE_URL, // 与 vite proxy / 后端网关前缀保持一致
   timeout: 15000,
   withCredentials: true, // 跨域请求时发送 cookie
 })
 
+// 请求拦截器：注入登录态
+axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = getToken()
+  if (token) {
+    config.headers.set('Authorization', `Bearer ${token}`)
+  }
+  return config
+})
+
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse<TApiResponse>) => {
-    if (response.data.code !== 200) {
-      message.error(response.data.message || '请求失败')
-      return Promise.reject(new Error(response.data.message || '请求失败'))
+    const body = response.data
+    if (body.code !== 200) {
+      message.error(body.message || '请求失败')
+      return Promise.reject(new ApiError(body.message || '请求失败', body.code))
     }
     return response
   },
-  (error: unknown) => {
-    if (import.meta.env.MODE === 'development') {
-      console.log(error)
+  (error: AxiosError<TApiResponse>) => {
+    const status = error.response?.status
+    // 401 未登录：清除登录态并跳转登录页
+    if (status === 401) {
+      clearToken()
+      window.location.hash = LOGIN_PATH
+      return Promise.reject(new ApiError('登录已过期，请重新登录', 401))
     }
-    return Promise.reject(new Error('服务器异常，请稍后重试…'))
+    // 403 无权限
+    if (status === 403) {
+      message.error('无权限访问')
+      return Promise.reject(new ApiError('无权限访问', 403))
+    }
+    if (import.meta.env.DEV) {
+      console.error('[request]', error)
+    }
+    return Promise.reject(
+      new ApiError(
+        status ? `请求失败（HTTP ${status}）` : '网络异常，请稍后重试…',
+        status,
+      ),
+    )
   },
 )
 
