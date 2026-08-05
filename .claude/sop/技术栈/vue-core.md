@@ -1,6 +1,7 @@
-# 技术栈规则：Vue 3 + Ant Design Vue
+# 技术栈规则：Vue 3 核心
 
-> 目标：此技术栈下的项目约定，换技术栈时此文件整体替换。
+> 目标：Vue 3 项目基础约定（框架层）。换技术栈时此文件整体替换。
+> Ant Design Vue 专属约定见 @.claude/sop/技术栈/vue-antd.md。
 
 ---
 
@@ -42,6 +43,7 @@ src/
 ```
 
 > 组件设计原则（分类、何时抽组件、Props 设计）见 @.claude/sop/通用/07-组件设计规范.md。
+> AntD 组件用法（Icon、主题 token）见 @.claude/sop/技术栈/vue-antd.md。
 
 ### Props 定义
 
@@ -71,14 +73,6 @@ type BasicTableEmit = {
 const emit = defineEmits<BasicTableEmit>()
 ```
 
-### Icon 引用
-
-从 `@ant-design/icons-vue` 按需引入，**不要**全量注册：
-
-```typescript
-import { SearchOutlined, DeleteOutlined } from '@ant-design/icons-vue'
-```
-
 ### 暴露内部方法
 
 ```typescript
@@ -92,40 +86,13 @@ defineExpose({ reload, reset })
 ## HTTP 请求（Axios）
 
 - 统一通过 `src/utils/request.ts` 创建的 Axios 实例
-- 后端返回格式：`{ code, message, data }`（200 成功）；分页数据独立为 `TPageResult<T> = { list, page, pageSize, total, totalPage }`
-- 开发环境自动打印错误日志
 - `baseURL` 通过 `import.meta.env.VITE_BASE_URL` 配置
 
-### API 层写法
-
-> API 函数命名、类型继承、前缀提取等通用规范见 @.claude/sop/通用/06-api设计规范.md。以下仅展示 Axios 实例的基本使用方式。
-
-```typescript
-// src/api/user.ts
-import request from '@/utils/request'
-import type { TUserListReq, TUserListResp, TUserInfo } from '@/types/user'
-
-const PREFIX = '/user'
-
-export function fetchUserListApi(params: TUserListReq) {
-  return request.get<TUserListResp>(`${PREFIX}/list`, { params })
-}
-
-export function fetchUserDetailApi(id: number) {
-  return request.get<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`)
-}
-
-export function createUserApi(data: Partial<TUserInfo>) {
-  return request.post<TApiResponse<TUserInfo>>(PREFIX, data)
-}
-```
+> 响应结构 `{ code, message, data }`、分页 `TPageResult<T>` 定义及 API 层完整写法（命名 / 类型继承 / 前缀提取）见 @.claude/sop/通用/06-api设计规范.md。
 
 ## ECharts
 
-- 通过 `src/utils/echarts.ts` 按需注册组件
-- 不要直接 `import * as echarts from 'echarts'`
-- 图表类型定义用 `src/types/echarts.ts` 中的 `TChartOption`
-- 图表 option 的构造逻辑封装在 `src/hooks/` 中
+见 @.claude/sop/技术栈/vue-echarts.md
 
 ## 路由
 
@@ -145,12 +112,23 @@ export function createUserApi(data: Partial<TUserInfo>) {
 ## 样式（Less）
 
 - 使用 scoped style
-- 覆盖 Ant Design Vue 组件样式时，用 scoped + 嵌套选择器
 - 全屏布局使用 `calc(100vh - Xpx)` 实现
 - 组件根元素 class 统一使用 `组件名_kebab-case_wrapper` 格式
+- 覆盖 AntD 组件样式与主题定制见 @.claude/sop/技术栈/vue-antd.md
 
 ## 类型检查
 
 - TypeScript `strict: true`
 - 使用 `@vue/tsconfig` 基础配置
 - 运行 `vue-tsc --build --force` 进行类型检查（见 `package.json`）
+
+---
+
+## 相关文档
+
+- 07-组件设计规范（组件分类、何时抽组件、Props/Emits 设计）
+- 06-api设计规范（API 命名、响应结构、类型继承）
+- 03-代码约束（类型、代码组织、注释约束）
+- 技术栈/vue-antd.md（Ant Design Vue 专属约定）
+- 技术栈/vue-pinia.md（状态管理写法）
+- 技术栈/vue-echarts.md（图表规范）

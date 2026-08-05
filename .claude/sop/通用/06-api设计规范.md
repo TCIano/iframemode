@@ -162,3 +162,10 @@ export function deleteUserApi(id: number) {
 
 - API 层（`src/api/xxx.ts`）不 catch 错误
 - 只在需要特殊处理的页面/组件内 catch
+
+---
+
+## 相关文档
+
+- 03-代码约束（类型继承、禁止 any）
+- 技术栈/vue-core.md（Axios 实例用法）

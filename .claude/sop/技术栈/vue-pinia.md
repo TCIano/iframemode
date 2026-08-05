@@ -109,3 +109,9 @@ const { fetchList } = userStore
 ## 替换
 
 换 React 项目时，此文件整体替换为对应方案（如 Zustand / Redux Toolkit），决策规则不变（见 08-状态管理规范.md）。
+
+---
+
+## 相关文档
+
+- 08-状态管理规范（何时用 store 的决策规则）
