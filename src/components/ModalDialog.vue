@@ -2,13 +2,16 @@
   <a-modal
     v-model:visible="visible"
     :title="title"
-    class="modal-dialog-wrapper"
+    class="modal-dialog"
     cancel-text="取消"
     ok-text="确定"
     @ok="onConfirm"
     @cancel="onCancel"
   >
-    <div :style="{ maxHeight: contentHeight }">
+    <div
+      class="modal-dialog__content"
+      :style="{ '--modal-content-height': contentHeight }"
+    >
       <slot name="content"></slot>
     </div>
   </a-modal>
@@ -65,3 +68,9 @@ function onCancel() {
 
 defineExpose({ close, show, toggle })
 </script>
+
+<style lang="less" scoped>
+.modal-dialog__content {
+  max-height: var(--modal-content-height);
+}
+</style>

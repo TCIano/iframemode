@@ -147,7 +147,7 @@ export function createUserApi(data: Partial<TUserInfo>) {
 - 使用 scoped style
 - 覆盖 Ant Design Vue 组件样式时，用 scoped + 嵌套选择器
 - 全屏布局使用 `calc(100vh - Xpx)` 实现
-- 组件根元素 class 统一使用 `组件名_kebab-case_wrapper` 格式
+- 组件 class 采用简化 BEM：块 = 组件根（组件名转 kebab-case），元素用 `块__元素`，修饰符用 `块--修饰`（详见 02-命名规则.md）
 
 ## 类型检查
 
