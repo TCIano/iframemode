@@ -11,18 +11,31 @@
     "build": "vue-tsc --build --force && vite build",
     "preview": "vite preview",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix && stylelint \"src/**/*.{vue,less,css}\" --fix",
+    "lint:style": "stylelint \"src/**/*.{vue,less,css}\" --fix",
     "format": "prettier --write \"src/**/*.{ts,vue,css,less}\"",
     "prepare": "husky",
     "gen:api": "plop api",
     "gen:page": "plop page",
     "gen:component": "plop component"
   },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.vue": [
+      "eslint --fix",
+      "prettier --write",
+      "stylelint --fix"
+    ],
+    "*.{css,less}": [
+      "prettier --write",
+      "stylelint --fix"
+    ]
+  },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
-    "@vue-flow/background": "^1.3.2",
-    "@vue-flow/controls": "^1.1.3",
-    "@vue-flow/core": "^1.48.2",
     "ant-design-vue": "^4.2.2",
     "axios": "^1.6.5",
     "dayjs": "^1.11.10",
@@ -31,7 +44,6 @@
     "less-loader": "^11.1.4",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
-    "vue-request": "^2.0.4",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
@@ -51,7 +63,12 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "plop": "^4.0.5",
+    "postcss-html": "^2.0.0",
+    "postcss-less": "^6.0.0",
     "prettier": "^3.2.5",
+    "stylelint": "^17.14.1",
+    "stylelint-config-recommended-vue": "^2.0.0",
+    "stylelint-config-standard": "^40.0.0",
     "typescript": "~5.3.0",
     "typescript-eslint": "^8.0.0-alpha.20",
     "vite": "^5.0.10",

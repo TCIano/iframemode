@@ -1,10 +1,10 @@
 <template>
   <a-config-provider :locale="locale">
-    <a-layout style="min-height: 100vh">
+    <a-layout class="app-layout">
       <a-layout-sider
         v-if="!isProd"
         v-model:collapsed="collapsed"
-        style="background: #fff"
+        class="app-sider"
       >
         <a-menu
           v-model:selected-keys="selectedKeys"
@@ -18,14 +18,7 @@
       </a-layout-sider>
       <a-layout>
         <a-layout-content>
-          <div
-            :style="{
-              padding: '1px',
-              background: '#fff',
-              height: '100vh',
-              minHeight: '350px',
-            }"
-          >
+          <div class="app-content">
             <router-view></router-view>
           </div>
         </a-layout-content>
@@ -57,4 +50,19 @@ const onItemClick = ({ key }: typeof MenuItem) => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.app-layout {
+  min-height: 100vh;
+}
+
+.app-sider {
+  background: #fff;
+}
+
+.app-content {
+  padding: 1px;
+  background: #fff;
+  height: 100vh;
+  min-height: 350px;
+}
+</style>

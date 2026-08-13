@@ -3,7 +3,7 @@
     v-model:visible="visible"
     :width="width"
     :title="title"
-    class="drawer-dialog-wrapper"
+    class="drawer-dialog"
     @close="onCancel"
   >
     <template #extra>
@@ -12,7 +12,7 @@
         <a-button type="primary" @click="onConfirm">确定</a-button>
       </a-space>
     </template>
-    <div>
+    <div class="drawer-dialog__content">
       <slot name="content"></slot>
     </div>
   </a-drawer>
@@ -69,11 +69,12 @@ defineExpose({ close, show, toggle })
 </script>
 
 <style lang="less" scoped>
-.drawer-dialog-wrapper {
+.drawer-dialog {
   :deep(.ant-drawer-body) {
     &::-webkit-scrollbar {
       display: none;
     }
+
     scrollbar-width: none;
     -moz-scrollbar: none;
     -ms-overflow-style: none;

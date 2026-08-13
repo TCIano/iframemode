@@ -44,7 +44,7 @@ fetch{Resource}{Action}  — 资源名 + 操作，camelCase
 type TApiResponse<T = unknown> = {
   /** 业务状态码，200 表示成功 */
   code: number
-  /** 响应数据（成功时承载业务数据，失败时可为 null） */
+  /** 响应数据（业务层拿到的均为成功响应，data 必存在；失败响应在拦截器层被 reject） */
   data: T
   /** 状态描述 */
   message: string
@@ -97,6 +97,9 @@ type TUserInfo = TUserBase & {
   role: 'admin' | 'user'
 }
 
+// 新增/编辑入参：从 TUserInfo 提取可编辑字段，避免重复
+type TCreateUserReq = Pick<TUserInfo, 'name' | 'email' | 'role'>
+
 type TUserListReq = TPaginationReq & {
   keyword?: string
 }
@@ -125,23 +128,30 @@ import request from '@/utils/request'
 
 const PREFIX = '/user'
 
-export function fetchUserListApi(params: TUserListReq) {
+export function fetchUserListApi(params: TUserListReq): Promise<TUserListResp> {
   return request.get<TUserListResp>(`${PREFIX}/list`, { params })
 }
 
-export function fetchUserDetailApi(id: number) {
+export function fetchUserDetailApi(
+  id: number,
+): Promise<TApiResponse<TUserInfo>> {
   return request.get<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`)
 }
 
-export function createUserApi(data: TCreateUserReq) {
+export function createUserApi(
+  data: TCreateUserReq,
+): Promise<TApiResponse<TUserInfo>> {
   return request.post<TApiResponse<TUserInfo>>(PREFIX, data)
 }
 
-export function updateUserApi(id: number, data: Partial<TCreateUserReq>) {
+export function updateUserApi(
+  id: number,
+  data: Partial<TCreateUserReq>,
+): Promise<TApiResponse<TUserInfo>> {
   return request.put<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`, data)
 }
 
-export function deleteUserApi(id: number) {
+export function deleteUserApi(id: number): Promise<TApiResponse> {
   return request.delete<TApiResponse>(`${PREFIX}/${id}`)
 }
 ```
