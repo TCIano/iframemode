@@ -9,6 +9,7 @@ Vue 3 + TypeScript + Ant Design Vue 企业级前端模板（iframeMode-template�
 - Pinia（Composition API 风格 store）+ Vue Router（Hash 模式）
 - Vite 5 + vue-tsc + ESLint 9（perfectionist 排序）+ Stylelint + Prettier + commitlint + husky/lint-staged
 - ECharts 5（按需注册，见 `src/utils/echarts.ts`）+ less（scoped）
+- Vitest + @vue/test-utils（单元/组件测试，测试文件放 `src/**/__tests__/`）+ Playwright（E2E，`e2e/` 目录）
 
 ## 目录结构
 
@@ -31,18 +32,23 @@ src/
 
 ## 命令
 
-| 命令                                  | 用途                                             |
-| ------------------------------------- | ------------------------------------------------ |
-| `npm run dev`                         | 开发服务器（vite proxy `/api` → localhost:8080） |
-| `npm run build`                       | vue-tsc 类型检查 + vite build                    |
-| `npm run lint`                        | ESLint + Stylelint 修复                          |
-| `npm run lint:style`                  | Stylelint 修复（样式）                           |
-| `npm run format`                      | Prettier 格式化                                  |
-| `npm run type-check`                  | vue-tsc 类型检查                                 |
-| `npm run gen:api -- <模块>`           | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`       |
-| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面 + hooks               |
-| `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                    |
-| `node create.js <name> [--stack xxx]` | 从模板初始化新项目                               |
+| 命令                                  | 用途                                              |
+| ------------------------------------- | ------------------------------------------------- |
+| `npm run dev`                         | 开发服务器（vite proxy `/api` → localhost:8080）  |
+| `npm run build`                       | vue-tsc 类型检查 + vite build                     |
+| `npm run lint`                        | ESLint + Stylelint 修复                           |
+| `npm run lint:style`                  | Stylelint 修复（样式）                            |
+| `npm run format`                      | Prettier 格式化                                   |
+| `npm run type-check`                  | vue-tsc 类型检查                                  |
+| `npm run gen:api -- <模块>`           | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`        |
+| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面 + hooks                |
+| `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                     |
+| `npm run test`                        | 单元/组件测试（vitest watch 模式）                |
+| `npm run test:run`                    | 单元/组件测试（单次执行）                         |
+| `npm run test:coverage`               | 单元/组件测试 + 覆盖率（v8）                      |
+| `npm run type-check:test`             | 测试文件类型检查（tsconfig.vitest.json）          |
+| `npm run test:e2e`                    | Playwright E2E（首次需 `npx playwright install`） |
+| `node create.js <name> [--stack xxx]` | 从模板初始化新项目                                |
 
 ## 规范与文档索引
 

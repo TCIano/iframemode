@@ -2,25 +2,23 @@ import type { TApiResponse, TPageResult, TPaginationReq } from './common'
 
 /** 模块公共基类 — 所有该模块接口继承此类型 */
 type T{{pascalCase name}}Base = {
-  id: number
   createdAt: string
+  id: number
   updatedAt: string
 }
 
 /** 单条数据 */
-type T{{pascalCase name}}Info = T{{pascalCase name}}Base & {
+type T{{pascalCase name}}Info = {
   // TODO: add fields
-}
+} & T{{pascalCase name}}Base
 
 /** 列表查询参数 */
-type T{{pascalCase name}}ListReq = TPaginationReq & {
+type T{{pascalCase name}}ListReq = {
   // TODO: add filter fields
-}
+} & TPaginationReq
 
 /** 新增请求参数 */
-type T{{pascalCase name}}CreateReq = {
-  // TODO: add fields
-}
+type T{{pascalCase name}}CreateReq = object
 
 /** 编辑请求参数（部分字段更新） */
 type T{{pascalCase name}}UpdateReq = Partial<T{{pascalCase name}}CreateReq>

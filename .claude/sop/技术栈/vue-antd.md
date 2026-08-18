@@ -6,6 +6,15 @@
 
 ---
 
+## UI 库选型
+
+- **AntD 是唯一 UI 库**，禁混用其他组件库（Element Plus / Naive UI 等）
+- AntD 有现成组件直接用，不包装不自造；业务封装只在复用≥2次时做（见 07 反例）
+- 图标统一 `@ant-design/icons-vue`，不引其他图标库
+- 引入新第三方库前评估：bundle 体积、维护活跃度、与 AntD 主题 token 兼容性、tree-shaking
+
+---
+
 ## Icon 引用
 
 从 `@ant-design/icons-vue` 按需引入，**不要**全量注册：

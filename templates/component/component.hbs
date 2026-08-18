@@ -1,27 +1,23 @@
 <script setup lang="ts">
-// types
-
 /** props */
-interface {{pascalCase name}}Props {
-  // TODO: add props
+type {{pascalCase name}}Props = {
+  /** 标题（TODO: 按需增删） */
+  title: string
 }
 
-const props = withDefaults(defineProps<{{pascalCase name}}Props>(), {
-  // TODO: add defaults
-})
-
 /** emits */
-const emit = defineEmits<{
+type {{pascalCase name}}Emits = {
   (e: 'update'): void
-}>()
+}
 
-/** state */
-// const loading = ref(false)
+const props = defineProps<{{pascalCase name}}Props>()
+const emit = defineEmits<{{pascalCase name}}Emits>()
 </script>
 
 <template>
   <div class="{{kebabCase name}}">
-    <!-- TODO: implement -->
+    \{{ props.title }}
+    <button @click="emit('update')">触发 update</button>
   </div>
 </template>
 

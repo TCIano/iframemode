@@ -1,45 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { use{{pascalCase name}} } from './hooks/use{{pascalCase name}}'
 
-// types
-
-/** props */
-interface {{pascalCase name}}Props {
-  // TODO: add props
-}
-
-const props = withDefaults(defineProps<{{pascalCase name}}Props>(), {
-  // TODO: add defaults
-})
-
-/** emits */
-const emit = defineEmits<{
-  (e: 'update'): void
-}>()
-
-/** state */
-const loading = ref(false)
-const data = ref<unknown[]>([])
-
-/** methods */
-async function fetchData() {
-  loading.value = true
-  try {
-    // TODO: call API
-  } finally {
-    loading.value = false
-  }
-}
-
-/** lifecycle */
-onMounted(() => {
-  fetchData()
-})
+/** 数据流由 hook 统一管理，useAsyncState 默认 immediate 自动请求 */
+const { data, error, fetchData, loading } = use{{pascalCase name}}()
 </script>
 
 <template>
   <div class="{{kebabCase name}}">
-    <!-- TODO: implement -->
+    <div v-if="loading">加载中…</div>
+    <div v-else-if="error">加载失败：\{{ error }}</div>
+    <div v-else>\{{ data }}</div>
+    <button @click="fetchData">刷新</button>
   </div>
 </template>
 
