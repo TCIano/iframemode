@@ -8,9 +8,8 @@
 
 ```
 src/stores/
-├── index.ts           ← 导出所有 store，方便统一引用
-├── user.ts            ← 用户模块
-└── report.ts          └ 报表模块
+├── user.ts              ← 用户模块
+└── report.ts            ← 报表模块
 ```
 
 ## 基本规则

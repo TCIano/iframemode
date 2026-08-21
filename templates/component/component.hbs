@@ -6,12 +6,12 @@ type {{pascalCase name}}Props = {
 }
 
 /** emits */
-type {{pascalCase name}}Emits = {
+type {{pascalCase name}}Emit = {
   (e: 'update'): void
 }
 
 const props = defineProps<{{pascalCase name}}Props>()
-const emit = defineEmits<{{pascalCase name}}Emits>()
+const emit = defineEmits<{{pascalCase name}}Emit>()
 </script>
 
 <template>

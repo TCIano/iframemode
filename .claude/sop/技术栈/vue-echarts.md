@@ -16,8 +16,8 @@
 - 实例获取用 `src/utils/echarts.ts` 的 `getEchartsInstance(dom, theme?)`：懒初始化，同 DOM 幂等
 - 实例生命周期管理用 `src/hooks/useChart.ts` 的 `useChart`：
   - 入参：`useChart(domRef, () => option, { onFinished?, onAxisClick? })`
-  - 接管：init、option 变化自动 `setOption`、window resize、销毁清理、`spinning` 状态
-  - 返回：`{ chart, spinning, init, resize, updateOption, disposeDom, destroy }`
+  - 接管：init、option 变化自动 `setOption`、window resize、销毁清理
+  - 返回：`{ chart, init, resize, updateOption, destroy }`
 
 分层约定：`utils/echarts.ts` 只做注册 + 实例获取（无状态工具），`hooks/useChart.ts` 管实例生命周期（有状态），业务侧只需提供 option 构造函数。
 
