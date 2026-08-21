@@ -57,8 +57,8 @@ npm run dev
 └── docs/                 # 技术文档
 ```
 
-## 技术文档
+## 规范文档
 
-架构分层、接口规范、代码生成、SOP 体系的完整说明见 **[docs/技术文档.md](docs/技术文档.md)**。
+开发规范按任务读取表见 **[.claude/sop/README.md](.claude/sop/README.md)**，约定术语定义见 **[CONTEXT.md](CONTEXT.md)**（根目录术语表），技术决策见 **[.claude/adr/](.claude/adr/)**。
 
 > 文档版本：1.0.0 ｜ Vue 3 + TypeScript + Ant Design Vue
