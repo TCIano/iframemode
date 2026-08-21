@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /** props */
 type {{pascalCase name}}Props = {
-  /** 标题（TODO: 按需增删） */
+  /** 标题（按需增删） */
   title: string
 }
 
@@ -17,12 +17,12 @@ const emit = defineEmits<{{pascalCase name}}Emits>()
 <template>
   <div class="{{kebabCase name}}">
     \{{ props.title }}
-    <button @click="emit('update')">触发 update</button>
+    <a-button type="primary" @click="emit('update')">触发 update</a-button>
   </div>
 </template>
 
 <style scoped lang="less">
 .{{kebabCase name}} {
-  // TODO: add styles
+  // TODO: 按需补充样式
 }
 </style>

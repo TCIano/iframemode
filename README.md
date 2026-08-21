@@ -6,7 +6,7 @@ Vue 3 + TypeScript + Ant Design Vue 企业级前端项目模板，解决"从 0 �
 
 - **标准化的八层目录架构**：`views / components / hooks / api / stores / types / utils / router`，职责边界清晰、数据流向固定
 - **完整的工程化配置**：ESLint / Prettier / Husky / lint-staged / commitlint 开箱即用
-- **代码生成脚手架**：一条命令生成符合规范的 API 模块 / 页面 / 组件骨架（Plop）
+- **代码生成脚手架**：一条命令生成符合规范的 API 模块 / 页面骨架 / 组件骨架
 - **一键建项目**：`create.js` 复制模板、改名、初始化 git、自动装依赖
 - **SOP 规范体系**：`.claude/sop/` 沉淀团队规范，让 AI 也能按统一标准产出代码
 
@@ -37,7 +37,7 @@ npm run dev
 | `npm run type-check`                | TypeScript 类型检查                            |
 | `npm run lint`                      | ESLint 检查并自动修复                          |
 | `npm run gen:api -- <模块名>`       | 生成 API 模块（`api/xxx.ts` + `types/xxx.ts`） |
-| `npm run gen:page -- <页面名>`      | 生成页面（`views/xxx/` + hooks + components）  |
+| `npm run gen:page -- <页面名>`      | 生成页面骨架（`views/xxx/` + components）      |
 | `npm run gen:component -- <组件名>` | 生成通用组件（`components/Xxx.vue`）           |
 
 ## 目录结构
@@ -53,7 +53,7 @@ npm run dev
 │   ├── utils/            # 纯函数工具（request.ts / echarts.ts）
 │   └── views/            # 页面组件（一个路由对应一个文件夹）
 ├── templates/            # 脚手架模板（Plop 生成代码的源头）
-├── .claude/              # SOP 规范体系 + CLAUDE.md 场景路由
+├── .claude/              # SOP 规范体系 + 根目录 CLAUDE.md 导入桥
 └── docs/                 # 技术文档
 ```
 

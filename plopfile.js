@@ -52,18 +52,13 @@ export default function (plop) {
           type: 'add',
         },
         {
-          path: 'src/views/{{camelCase name}}/hooks/use{{pascalCase name}}.ts',
-          templateFile: 'templates/page/hook.hbs',
-          type: 'add',
-        },
-        {
           path: 'src/views/{{camelCase name}}/components/.gitkeep',
           template: '',
           type: 'add',
         },
       ]
     },
-    description: '生成页面（views/xxx/ + hooks + components）',
+    description: '生成页面骨架（views/xxx/ + components）',
     prompts: [
       { message: '页面名（如 user-list）：', name: 'name', type: 'input' },
     ],
@@ -85,7 +80,11 @@ export default function (plop) {
     },
     description: '生成通用组件（src/components/xxx.vue）',
     prompts: [
-      { message: '组件名（PascalCase，如 BasicTable）：', name: 'name', type: 'input' },
+      {
+        message: '组件名（PascalCase，如 BasicTable）：',
+        name: 'name',
+        type: 'input',
+      },
     ],
   })
 }

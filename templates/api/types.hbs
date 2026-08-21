@@ -1,6 +1,10 @@
-import type { TApiResponse, TPageResult, TPaginationReq } from './common'
+import type {
+  TApiResponse,
+  TPageResult,
+  TPaginationReq,
+} from '@/types/common'
 
-/** 模块公共基类 — 所有该模块接口继承此类型 */
+/** 模块公共基类，所有该模块接口类型继承此类型 */
 type T{{pascalCase name}}Base = {
   createdAt: string
   id: number
@@ -8,14 +12,14 @@ type T{{pascalCase name}}Base = {
 }
 
 /** 单条数据 */
-type T{{pascalCase name}}Info = {
-  // TODO: add fields
-} & T{{pascalCase name}}Base
+type T{{pascalCase name}}Info = T{{pascalCase name}}Base & {
+  // TODO: 补充业务字段
+}
 
 /** 列表查询参数 */
-type T{{pascalCase name}}ListReq = {
-  // TODO: add filter fields
-} & TPaginationReq
+type T{{pascalCase name}}ListReq = TPaginationReq & {
+  // TODO: 补充筛选字段
+}
 
 /** 新增请求参数 */
 type T{{pascalCase name}}CreateReq = object
@@ -24,7 +28,9 @@ type T{{pascalCase name}}CreateReq = object
 type T{{pascalCase name}}UpdateReq = Partial<T{{pascalCase name}}CreateReq>
 
 /** 列表响应 */
-type T{{pascalCase name}}ListResp = TApiResponse<TPageResult<T{{pascalCase name}}Info>>
+type T{{pascalCase name}}ListResp = TApiResponse<
+  TPageResult<T{{pascalCase name}}Info>
+>
 
 export type {
   T{{pascalCase name}}Base,

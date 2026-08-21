@@ -1,21 +1,12 @@
-<script setup lang="ts">
-import { use{{pascalCase name}} } from './hooks/use{{pascalCase name}}'
-
-/** 数据流由 hook 统一管理，useAsyncState 默认 immediate 自动请求 */
-const { data, error, fetchData, loading } = use{{pascalCase name}}()
-</script>
-
 <template>
   <div class="{{kebabCase name}}">
-    <div v-if="loading">加载中…</div>
-    <div v-else-if="error">加载失败：\{{ error }}</div>
-    <div v-else>\{{ data }}</div>
-    <button @click="fetchData">刷新</button>
+    <a-empty description="页面内容待实现" />
   </div>
 </template>
 
 <style scoped lang="less">
 .{{kebabCase name}} {
-  // TODO: add styles
+  min-height: 240px;
+  padding: 24px;
 }
 </style>

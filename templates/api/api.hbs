@@ -11,22 +11,33 @@ import request from '@/utils/request'
 
 const PREFIX = '/{{name}}'
 
-export function fetch{{pascalCase name}}ListApi(params: T{{pascalCase name}}ListReq) {
+export function fetch{{pascalCase name}}ListApi(
+  params: T{{pascalCase name}}ListReq,
+): Promise<T{{pascalCase name}}ListResp> {
   return request.get<T{{pascalCase name}}ListResp>(`${PREFIX}/list`, { params })
 }
 
-export function fetch{{pascalCase name}}DetailApi(id: number) {
+export function fetch{{pascalCase name}}DetailApi(
+  id: number,
+): Promise<TApiResponse<T{{pascalCase name}}Info>> {
   return request.get<TApiResponse<T{{pascalCase name}}Info>>(`${PREFIX}/${id}`)
 }
 
-export function create{{pascalCase name}}Api(data: T{{pascalCase name}}CreateReq) {
+export function create{{pascalCase name}}Api(
+  data: T{{pascalCase name}}CreateReq,
+): Promise<TApiResponse<T{{pascalCase name}}Info>> {
   return request.post<TApiResponse<T{{pascalCase name}}Info>>(PREFIX, data)
 }
 
-export function update{{pascalCase name}}Api(id: number, data: T{{pascalCase name}}UpdateReq) {
+export function update{{pascalCase name}}Api(
+  id: number,
+  data: T{{pascalCase name}}UpdateReq,
+): Promise<TApiResponse<T{{pascalCase name}}Info>> {
   return request.put<TApiResponse<T{{pascalCase name}}Info>>(`${PREFIX}/${id}`, data)
 }
 
-export function delete{{pascalCase name}}Api(id: number) {
+export function delete{{pascalCase name}}Api(
+  id: number,
+): Promise<TApiResponse> {
   return request.delete<TApiResponse>(`${PREFIX}/${id}`)
 }

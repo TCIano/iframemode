@@ -1,7 +1,8 @@
 <template>
   <a-modal
-    v-model:visible="visible"
-    :title="title"
+    v-model:open="visible"
+    :title="props.title"
+    :width="props.width || undefined"
     class="modal-dialog"
     cancel-text="取消"
     ok-text="确定"
@@ -10,7 +11,7 @@
   >
     <div
       class="modal-dialog__content"
-      :style="{ '--modal-content-height': contentHeight }"
+      :style="{ '--modal-content-height': props.contentHeight }"
     >
       <slot name="content"></slot>
     </div>
@@ -22,7 +23,7 @@ import { ref } from 'vue'
 
 defineOptions({ name: 'ModalDialog' })
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     contentHeight?: string
     title?: string

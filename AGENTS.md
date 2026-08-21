@@ -41,7 +41,7 @@ src/
 | `npm run format`                      | Prettier 格式化                                   |
 | `npm run type-check`                  | vue-tsc 类型检查                                  |
 | `npm run gen:api -- <模块>`           | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`        |
-| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面 + hooks                |
+| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面骨架 + components       |
 | `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                     |
 | `npm run test`                        | 单元/组件测试（vitest watch 模式）                |
 | `npm run test:run`                    | 单元/组件测试（单次执行）                         |
@@ -101,11 +101,11 @@ src/
 
 ### 脚手架对应 SOP
 
-| 命令                             | 生成内容                              | 对应 SOP                                 |
-| -------------------------------- | ------------------------------------- | ---------------------------------------- |
-| `npm run gen:api <模块名>`       | `src/api/xxx.ts` + `src/types/xxx.ts` | 06-api设计规范 + 03-代码约束（类型继承） |
-| `npm run gen:page <页面名>`      | `src/views/xxx/` + hooks + components | 技术栈/vue-core（目录结构）              |
-| `npm run gen:component <组件名>` | `src/components/Xxx.vue`              | 07-组件设计规范 + 技术栈（组件写法）     |
+| 命令                             | 生成内容                               | 对应 SOP                                 |
+| -------------------------------- | -------------------------------------- | ---------------------------------------- |
+| `npm run gen:api <模块名>`       | `src/api/xxx.ts` + `src/types/xxx.ts`  | 06-api设计规范 + 03-代码约束（类型继承） |
+| `npm run gen:page <页面名>`      | `src/views/xxx/` 页面骨架 + components | 技术栈/vue-core（目录结构）              |
+| `npm run gen:component <组件名>` | `src/components/Xxx.vue`               | 07-组件设计规范 + 技术栈（组件写法）     |
 
 ### 规范演进
 
