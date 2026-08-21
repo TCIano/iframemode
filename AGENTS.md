@@ -39,7 +39,6 @@ src/
 | `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                     |
 | `npm run test:run`                    | 单元/组件测试（单次执行）                         |
 | `npm run test:e2e`                    | Playwright E2E（首次需 `npx playwright install`） |
-| `node create.js <name> [--stack xxx]` | 从模板初始化新项目                                |
 
 > 其余脚本（`dev` / `build` / `lint` / `format` / `type-check` 等）见 `package.json`，不在此重复。
 > `pre-commit` 不执行类型检查，提交前需手动 `npm run type-check`（详见 09-自动校验规范）。

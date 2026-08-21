@@ -31,16 +31,6 @@ export default tseslint.config(
   },
   perfectionist.configs['recommended-alphabetical'],
   {
-    // create.js 为 Node 脚本，声明 Node 全局变量
-    files: ['create.js'],
-    languageOptions: {
-      globals: {
-        console: 'readonly',
-        process: 'readonly',
-      },
-    },
-  },
-  {
     files: ['src/**/*.ts', 'src/**/*.vue'],
     plugins: {
       '@typescript-eslint': tseslint.plugin,
