@@ -18,7 +18,7 @@ type BasicChartProps = {
 }
 
 type BasicChartEmit = {
-  (e: 'onAxisClick', params: ElementEvent): void
+  (e: 'axisClick', params: ElementEvent): void
 }
 
 const props = withDefaults(defineProps<BasicChartProps>(), {
@@ -30,25 +30,19 @@ const spinning = ref(true)
 const style = ref<CSSProperties>(props.styleOp)
 const comChart = ref<HTMLDivElement | null>(null)
 
-const { chart, destroy, init, resize, updateOption } = useChart(
-  comChart,
-  () => props.option,
-  {
-    onAxisClick: (params) => emit('onAxisClick', params),
-    onFinished: () => {
-      spinning.value = false
-    },
+const { updateOption } = useChart(comChart, () => props.option, {
+  onAxisClick: (params) => emit('axisClick', params),
+  onFinished: () => {
+    spinning.value = false
   },
-)
-
-defineExpose({
-  chart,
-  destroy,
-  init,
-  resize,
-  spinning,
-  updateOption,
 })
+
+/** 手动强制重绘（如容器尺寸变化后）；chart 实例由 useChart 内部自管，不对外暴露 */
+function refresh() {
+  updateOption(props.option)
+}
+
+defineExpose({ refresh, spinning })
 </script>
 
 <style lang="less" scoped></style>

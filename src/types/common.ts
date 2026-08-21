@@ -1,4 +1,4 @@
-/** 后端统一响应格式（主流：code + message + data） */
+/** 统一响应契约（主流：code + message + data，见 CONTEXT.md） */
 type TApiResponse<T = unknown> = {
   /** 业务状态码，200 表示成功 */
   code: number

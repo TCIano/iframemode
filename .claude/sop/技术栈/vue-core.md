@@ -88,7 +88,7 @@ defineExpose({ reload, reset })
 - 统一通过 `src/utils/request.ts` 创建的 Axios 实例
 - `baseURL` 通过 `import.meta.env.VITE_BASE_URL` 配置
 
-> 响应结构 `{ code, message, data }`、分页 `TPageResult<T>` 定义及 API 层完整写法（命名 / 类型继承 / 前缀提取）见 @.claude/sop/通用/06-api设计规范.md。
+> 统一响应契约（`{ code, message, data }`，见 CONTEXT.md）、分页 `TPageResult<T>` 定义及 API 层完整写法（命名 / 类型继承 / 前缀提取）见 @.claude/sop/通用/06-api设计规范.md。
 
 ## ECharts
 
@@ -126,7 +126,7 @@ defineExpose({ reload, reset })
 ## 相关文档
 
 - 07-组件设计规范（组件分类、何时抽组件、Props/Emits 设计）
-- 06-api设计规范（API 命名、响应结构、类型继承）
+- 06-api设计规范（API 命名、契约、类型继承）
 - 03-代码约束（类型、代码组织、注释约束）
 - 技术栈/vue-antd.md（Ant Design Vue 专属约定）
 - 技术栈/vue-pinia.md（状态管理写法）

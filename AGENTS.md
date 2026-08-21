@@ -32,42 +32,22 @@ src/
 
 ## 命令
 
-| 命令                                  | 用途                                         |
-| ------------------------------------- | -------------------------------------------- |
-| `npm run gen:api -- <模块>`           | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`   |
-| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面骨架 + components  |
-| `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                |
-| `npm run test:run`                    | 单元/组件测试（单次执行）                    |
+| 命令                                  | 用途                                              |
+| ------------------------------------- | ------------------------------------------------- |
+| `npm run gen:api -- <模块>`           | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`        |
+| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面骨架 + components       |
+| `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                     |
+| `npm run test:run`                    | 单元/组件测试（单次执行）                         |
 | `npm run test:e2e`                    | Playwright E2E（首次需 `npx playwright install`） |
-| `node create.js <name> [--stack xxx]` | 从模板初始化新项目                           |
+| `node create.js <name> [--stack xxx]` | 从模板初始化新项目                                |
 
 > 其余脚本（`dev` / `build` / `lint` / `format` / `type-check` 等）见 `package.json`，不在此重复。
 > `pre-commit` 不执行类型检查，提交前需手动 `npm run type-check`（详见 09-自动校验规范）。
 
 ## 规范文档
 
-**按任务查规范 → 读 `.claude/sop/README.md`**（唯一入口：文件索引、按任务读取表、组合场景、脚手架对应、优先级）。
-
-高频分支（完整表见 README）：
-
-| 任务                | 至少读                                                        |
-| ------------------- | ------------------------------------------------------------- |
-| 改组件 / 该不该抽   | 07-组件设计规范 → 技术栈/vue-core → vue-antd                  |
-| 加 API / 类型       | 06-api设计规范 → 03-代码约束                                  |
-| 设计数据流          | 08-状态管理规范 → 技术栈/vue-pinia                            |
-| 输出代码后          | 05-自检清单                                                   |
-| 提交代码前          | 04-提交规范                                                   |
-
-> 表格是保底起点，不是白名单。组合场景（如"新建页面 + API + 类型"）的叠加读法见 `.claude/sop/README.md`。
+**按任务查规范 → 读 `.claude/sop/README.md`**（唯一入口：文件索引、按任务读取表、组合场景、脚手架对应、优先级）。任务地图与关键约定只在 README 及其指向的 SOP 维护
 
 ### 规范演进
 
 当 Agent 反复犯同一类错时，把错误抽象成一条新规则补进对应 SOP（例如：组件内直接写 `fetch` → 在 `03-代码约束.md` 补"组件内禁止直接 fetch/axios"）。让规范随使用持续进化，而不是写一次就落灰。
-
-## 关键约定（摘要，详见 SOP）
-
-- 组件/API 层编码规范由 SOP 约束，ESLint + commitlint + husky 自动拦截
-- 组件 class 采用简化 BEM（块 `__` 元素 `--` 修饰），scoped 优先
-- 类型统一 `type` + `T` 前缀，类型继承模块公共基类，禁止 `any`
-- 提交信息：中文描述 + type 前缀（feat/fix/docs/style/refactor/perf/test/chore/ci/revert）
-- 分支命名：`feat/xxx`、`fix/xxx`、`refactor/xxx`

@@ -36,11 +36,11 @@ fetch{Resource}{Action}  — 资源名 + 操作，camelCase
 - 后端响应体类型统一加 `Resp` 后缀：`TUserListResp`
 - 后端响应中的单条数据类型不加后缀：`TUserInfo`
 - api 层请求函数统一加 `Api` 后缀：`fetchUserListApi`（与 hooks / store action 同名区分）
-- 后端返回格式假设（文档用，非强制约定）：
+- 统一响应契约（见 CONTEXT.md；文档用，非强制约定）：
 
 ```typescript
 // src/types/common.ts
-/** 后端统一响应格式（主流：code + message + data） */
+/** 统一响应契约（主流：code + message + data，见 CONTEXT.md） */
 type TApiResponse<T = unknown> = {
   /** 业务状态码，200 表示成功 */
   code: number
