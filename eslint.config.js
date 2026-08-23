@@ -50,26 +50,29 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': 'error',
       eqeqeq: ['error', 'always', { null: 'ignore' }],
       'no-console': ['error', { allow: ['warn', 'error'] }],
-      'perfectionist/sort-imports': ['error', {
-        type: 'natural',
-        order: 'asc',
-        groups: [
-          'type',
-          ['builtin', 'external'],
-          'internal-type',
-          'internal',
-          ['parent-type', 'sibling-type', 'index-type'],
-          ['parent', 'sibling', 'index'],
-          'object',
-          'unknown',
-        ],
-        newlinesBetween: 'always',
-        internalPattern: ['@/**'],
-      }],
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          type: 'natural',
+          order: 'asc',
+          groups: [
+            'type',
+            ['builtin', 'external'],
+            'internal-type',
+            'internal',
+            ['parent-type', 'sibling-type', 'index-type'],
+            ['parent', 'sibling', 'index'],
+            'object',
+            'unknown',
+          ],
+          newlinesBetween: 'always',
+          internalPattern: ['@/**'],
+        },
+      ],
     },
   },
   {
-    // ant-design-vue 插件类型与 Vue App.use 签名不兼容，入口豁免 unsafe-argument（放在规则主块之后覆盖生效）
+    // ant-design-vue 插件类型与 Vue App.use 签名不兼容，入口 unsafe-argument（放在规则主块之后覆盖生效）
     files: ['src/main.ts'],
     rules: {
       '@typescript-eslint/no-unsafe-argument': 'off',
