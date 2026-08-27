@@ -6,8 +6,8 @@
 
 ## 按需注册
 
-- 通过 `src/utils/echarts.ts` 按需注册组件
-- 不要直接 `import * as echarts from 'echarts'`
+- 运行时代码通过 `src/utils/echarts.ts` 从 `echarts/core` 按需注册组件
+- 类型文件可使用 ECharts 的 type-only 导入组合 option 类型，但不得引入运行时全量模块
 
 ## 类型与封装
 

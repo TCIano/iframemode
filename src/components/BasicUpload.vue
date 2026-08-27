@@ -25,6 +25,20 @@ type BasicUploadEmit = {
   (e: 'handleUpload', fileList: FormData): void
 }
 
+function matchesAcceptRule(file: File, rule: string): boolean {
+  const normalizedRule = rule.trim().toLowerCase()
+  const fileName = file.name.toLowerCase()
+  const fileType = file.type.toLowerCase()
+
+  if (normalizedRule.startsWith('.')) {
+    return fileName.endsWith(normalizedRule)
+  }
+  if (normalizedRule.endsWith('/*')) {
+    return fileType.startsWith(normalizedRule.slice(0, -1))
+  }
+  return fileType === normalizedRule
+}
+
 const props = withDefaults(defineProps<BasicUploadProps>(), {
   accept: 'image/*',
 })
@@ -32,8 +46,8 @@ const emit = defineEmits<BasicUploadEmit>()
 const fileList = ref<UploadProps['fileList']>([])
 
 const beforeUpload: UploadProps['beforeUpload'] = (file) => {
-  const accept = props.accept.split(',').map((item) => item.trim()) // 去除每项空格
-  const typeOk = accept.includes(file.type)
+  const acceptRules = props.accept.split(',')
+  const typeOk = acceptRules.some((rule) => matchesAcceptRule(file, rule))
   if (!typeOk) {
     message.warning('接受的文件类型为' + props.accept)
   } else {

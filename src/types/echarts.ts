@@ -1,4 +1,4 @@
-import * as echarts from 'echarts'
+import type * as echarts from 'echarts'
 // 按需引入各模块类型
 import type {
   BarSeriesOption,

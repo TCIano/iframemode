@@ -1,6 +1,6 @@
 <template>
   <div class="tree-wrapper">
-    <a-row :gutter="1" style="height: 100%; width: 100%">
+    <a-row :gutter="1" class="tree-wrapper__row">
       <a-col :span="isShowTree ? 5 : 0">
         <div v-show="isShowTree" class="tree-wrapper__tree">
           <a-card
@@ -15,11 +15,7 @@
       </a-col>
       <a-col :span="isShowTree ? 19 : 24">
         <div class="tree-wrapper__detail">
-          <div
-            v-if="isShowBtn"
-            class="tree-wrapper__toggle"
-            style="position: absolute; top: 50%; left: 0; z-index: 99"
-          >
+          <div v-if="isShowBtn" class="tree-wrapper__toggle">
             <a-button
               v-if="isShowTree"
               :icon="h(LeftOutlined)"
@@ -67,6 +63,18 @@ const onShowTree = () => {
 <style lang="less" scoped>
 .tree-wrapper__tree {
   position: relative;
+}
+
+.tree-wrapper__row {
+  height: 100%;
+  width: 100%;
+}
+
+.tree-wrapper__toggle {
+  left: 0;
+  position: absolute;
+  top: 50%;
+  z-index: 99;
 }
 
 .tree-wrapper__tree-card {

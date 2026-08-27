@@ -1,6 +1,6 @@
 <template>
   <a-spin :spinning="spinning" size="large">
-    <div id="comChart" ref="comChart" :style="style" />
+    <div ref="comChart" :style="styleOp" />
   </a-spin>
 </template>
 
@@ -27,7 +27,6 @@ const props = withDefaults(defineProps<BasicChartProps>(), {
 })
 const emit = defineEmits<BasicChartEmit>()
 const spinning = ref(true)
-const style = ref<CSSProperties>(props.styleOp)
 const comChart = ref<HTMLDivElement | null>(null)
 
 const { updateOption } = useChart(comChart, () => props.option, {

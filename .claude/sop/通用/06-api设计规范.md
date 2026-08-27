@@ -32,7 +32,8 @@ fetch{Resource}{Action}  — 资源名 + 操作，camelCase
 
 ### 命名约定（前端侧）
 
-- 请求参数类型统一加 `Req` 后缀：`TUserListReq`
+- 实体型模块的基础类型使用 `T{Resource}Base`：`TUserBase`
+- 请求参数类型使用 `T{Resource}{Action}Req`：`TUserCreateReq`、`TUserListReq`
 - 后端响应体类型统一加 `Resp` 后缀：`TUserListResp`
 - 后端响应中的单条数据类型不加后缀：`TUserInfo`
 - api 层请求函数统一加 `Api` 后缀：`fetchUserListApi`（与 hooks / store action 同名区分）
@@ -89,6 +90,8 @@ src/types/
 
 ### 类型继承（与 03-代码约束.md 对齐）
 
+实体型模块存在稳定公共字段时，提取模块基类；查询、聚合或配置类型没有公共字段时，直接声明，不创建空基类。
+
 ```typescript
 // 模块基类（与后端数据字段对齐）
 type TUserBase = {
@@ -105,7 +108,7 @@ type TUserInfo = TUserBase & {
 }
 
 // 新增/编辑入参：从 TUserInfo 提取可编辑字段，避免重复
-type TCreateUserReq = Pick<TUserInfo, 'name' | 'email' | 'role'>
+type TUserCreateReq = Pick<TUserInfo, 'name' | 'email' | 'role'>
 
 type TUserListReq = TPaginationReq & {
   keyword?: string
@@ -159,14 +162,14 @@ export function fetchUserDetailApi(
 }
 
 export function createUserApi(
-  data: TCreateUserReq,
+  data: TUserCreateReq,
 ): Promise<TApiResponse<TUserInfo>> {
   return request.post<TApiResponse<TUserInfo>>(PREFIX, data)
 }
 
 export function updateUserApi(
   id: number,
-  data: Partial<TCreateUserReq>,
+  data: Partial<TUserCreateReq>,
 ): Promise<TApiResponse<TUserInfo>> {
   return request.put<TApiResponse<TUserInfo>>(`${PREFIX}/${id}`, data)
 }

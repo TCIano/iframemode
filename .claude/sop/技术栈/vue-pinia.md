@@ -69,7 +69,7 @@ export const useUserStore = defineStore('user', () => {
 | 类型         | 什么时候用                                   | 为什么                                                    |
 | ------------ | -------------------------------------------- | --------------------------------------------------------- |
 | `ref`        | 表单、当前对象、小型数据                     | 深层响应，嵌套属性变更自动追踪                            |
-| `shallowRef` | **大列表兜底**、全量缓存、频繁整体替换的数据 | 只追踪 `.value` 替换，不递归深层属性，省掉整棵 Proxy 开销 |
+| `shallowRef` | 大列表、全量缓存、频繁整体替换的数据         | 只追踪 `.value` 替换，不递归深层属性；仅在确认性能或更新模型匹配时使用 |
 
 ```typescript
 // ❌ 大列表用 ref — 每条记录都包 Proxy，变更检测白费
@@ -82,7 +82,7 @@ const res = await fetchList(params)
 list.value = res.data.list
 ```
 
-**经验法则：** store 里存放"服务端兜底数据"（列表、字典、配置）优先 `shallowRef`。需要深层响应（表单对象、当前编辑项）才用 `ref`。
+**经验法则：** 服务端数据是否进入 store 先按 `08-状态管理规范.md` 的共享需求判断；进入 store 后，只有不需要深层变更且以整体替换为主的大数据才使用 `shallowRef`。
 
 **注意：** `shallowRef` 不追踪深层属性变更，`list.value[0].name = 'x'` 不会触发更新。必须整体替换或手动 `triggerRef(list)`。
 
@@ -103,7 +103,7 @@ const { fetchList } = userStore
 - **不在组件内创建 store 实例之外的逻辑**（不需要在组件内再包一层 ref）
 - **不要在 store 里放 UI 状态**（弹窗 visible、当前表单值——这些属于组件）
 - **异步操作在 action 内完成**，组件只调用 action，不写 fetch
-- **store 间引用**：用 `useXxxStore()` 在 action 内部调用，避免循环依赖
+- **store 间引用**：允许在 action 内使用 `useXxxStore()` 建立单向依赖；禁止循环依赖，复杂跨领域协调交给页面容器
 
 ## 替换
 
