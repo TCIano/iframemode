@@ -5,38 +5,38 @@ import type {
 } from '@/types/common'
 
 /** 模块公共基类，所有该模块接口类型继承此类型 */
-type T{{pascalCase name}}Base = {
+type T{{pascalCase moduleName}}Base = {
   createdAt: string
   id: number
   updatedAt: string
 }
 
 /** 单条数据 */
-type T{{pascalCase name}}Info = T{{pascalCase name}}Base & {
+type T{{pascalCase moduleName}}Info = T{{pascalCase moduleName}}Base & {
   // TODO: 补充业务字段
 }
 
 /** 列表查询参数 */
-type T{{pascalCase name}}ListReq = TPaginationReq & {
+type T{{pascalCase moduleName}}ListReq = TPaginationReq & {
   // TODO: 补充筛选字段
 }
 
 /** 新增请求参数 */
-type T{{pascalCase name}}CreateReq = object
+type T{{pascalCase moduleName}}CreateReq = object
 
 /** 编辑请求参数（部分字段更新） */
-type T{{pascalCase name}}UpdateReq = Partial<T{{pascalCase name}}CreateReq>
+type T{{pascalCase moduleName}}UpdateReq = Partial<T{{pascalCase moduleName}}CreateReq>
 
 /** 列表响应 */
-type T{{pascalCase name}}ListResp = TApiResponse<
-  TPageResult<T{{pascalCase name}}Info>
+type T{{pascalCase moduleName}}ListResp = TApiResponse<
+  TPageResult<T{{pascalCase moduleName}}Info>
 >
 
 export type {
-  T{{pascalCase name}}Base,
-  T{{pascalCase name}}CreateReq,
-  T{{pascalCase name}}Info,
-  T{{pascalCase name}}ListReq,
-  T{{pascalCase name}}ListResp,
-  T{{pascalCase name}}UpdateReq,
+  T{{pascalCase moduleName}}Base,
+  T{{pascalCase moduleName}}CreateReq,
+  T{{pascalCase moduleName}}Info,
+  T{{pascalCase moduleName}}ListReq,
+  T{{pascalCase moduleName}}ListResp,
+  T{{pascalCase moduleName}}UpdateReq,
 }

@@ -18,15 +18,16 @@ npm run dev
 
 ## 常用命令
 
-| 命令                                | 用途                                           |
-| ----------------------------------- | ---------------------------------------------- |
-| `npm run dev`                       | 启动开发服务器                                 |
-| `npm run build`                     | 类型检查 + 构建                                |
-| `npm run type-check`                | TypeScript 类型检查                            |
-| `npm run lint`                      | ESLint 检查并自动修复                          |
-| `npm run gen:api -- <模块名>`       | 生成 API 模块（`api/xxx.ts` + `types/xxx.ts`） |
-| `npm run gen:page -- <页面名>`      | 生成页面骨架（`views/xxx/` + components）      |
-| `npm run gen:component -- <组件名>` | 生成通用组件（`components/Xxx.vue`）           |
+| 命令                                   | 用途                                                                 |
+| -------------------------------------- | -------------------------------------------------------------------- |
+| `npm run dev`                          | 启动开发服务器                                                       |
+| `npm run build`                        | 类型检查 + 构建                                                      |
+| `npm run type-check`                   | TypeScript 类型检查                                                  |
+| `npm run lint`                         | ESLint 检查并自动修复                                                |
+| `npm run gen:api -- <模块名>`          | 生成 API 模块（`api/xxx.ts` + `types/xxx.ts`）                       |
+| `npm run gen:api -- <业务域>/<模块名>` | 生成分域 API 模块（`api/<业务域>/xxx.ts` + `types/<业务域>/xxx.ts`） |
+| `npm run gen:page -- <页面名>`         | 生成页面骨架（`views/xxx/` + components）                            |
+| `npm run gen:component -- <组件名>`    | 生成通用组件（`components/Xxx.vue`）                                 |
 
 ## 目录结构
 

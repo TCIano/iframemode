@@ -32,13 +32,14 @@ src/
 
 ## 命令
 
-| 命令                                  | 用途                                              |
-| ------------------------------------- | ------------------------------------------------- |
-| `npm run gen:api -- <模块>`           | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`        |
-| `npm run gen:page -- <页面>`          | 生成 `src/views/xxx/` 页面骨架 + components       |
-| `npm run gen:component -- <组件>`     | 生成 `src/components/Xxx.vue`                     |
-| `npm run test:run`                    | 单元/组件测试（单次执行）                         |
-| `npm run test:e2e`                    | Playwright E2E（首次需 `npx playwright install`） |
+| 命令                                 | 用途                                                         |
+| ------------------------------------ | ------------------------------------------------------------ |
+| `npm run gen:api -- <模块>`          | 生成 `src/api/xxx.ts` + `src/types/xxx.ts`                   |
+| `npm run gen:api -- <业务域>/<模块>` | 生成 `src/api/<业务域>/xxx.ts` + `src/types/<业务域>/xxx.ts` |
+| `npm run gen:page -- <页面>`         | 生成 `src/views/xxx/` 页面骨架 + components                  |
+| `npm run gen:component -- <组件>`    | 生成 `src/components/Xxx.vue`                                |
+| `npm run test:run`                   | 单元/组件测试（单次执行）                                    |
+| `npm run test:e2e`                   | Playwright E2E（首次需 `npx playwright install`）            |
 
 > 其余脚本（`dev` / `build` / `lint` / `format` / `type-check` 等）见 `package.json`，不在此重复。
 > `pre-commit` 不执行类型检查，提交前需手动 `npm run type-check`（详见 09-自动校验规范）。

@@ -75,10 +75,17 @@ type TPaginationReq = {
 
 ```
 src/types/
-├── user.ts       ← 用户模块：TUserBase, TUserInfo, TUserListReq, TUserListResp
-├── report.ts     ← 报表模块：TReportBase, TReportItem, TReportListReq
-└── common.ts     ← 全局通用：TPaginationReq, TApiResponse, TPageResult
+├── common.ts             ← 全局通用：TPaginationReq, TApiResponse, TPageResult
+├── user.ts               ← 简单模块：TUserBase, TUserInfo, TUserListReq, TUserListResp
+├── system/
+│   ├── user.ts           ← system 业务域下的用户模块
+│   └── role.ts           ← system 业务域下的角色模块
+└── report/
+    └── dashboard.ts      ← report 业务域下的仪表盘模块
 ```
+
+模块较少时可直接使用 `src/types/<模块>.ts`；模块较多或存在明确业务域时，使用
+`src/types/<业务域>/<模块>.ts`。API 文件需与类型文件保持一一对应。
 
 ### 类型继承（与 03-代码约束.md 对齐）
 
@@ -113,10 +120,23 @@ type TUserListResp = TApiResponse<TPageResult<TUserInfo>>
 
 ```
 src/api/
-├── user.ts       ← 用户模块所有接口
-├── report.ts     ← 报表模块
-└── dashboard.ts  ← 仪表盘
+├── user.ts               ← 简单模块所有接口
+├── system/
+│   ├── user.ts           ← system 业务域下的用户接口
+│   └── role.ts           ← system 业务域下的角色接口
+└── report/
+    └── dashboard.ts      ← report 业务域下的仪表盘接口
 ```
+
+脚手架支持两种输入：
+
+```bash
+npm run gen:api -- user
+npm run gen:api -- system/user
+```
+
+分别生成 `src/api/user.ts` + `src/types/user.ts`，或
+`src/api/system/user.ts` + `src/types/system/user.ts`。
 
 ### 模块 URL 前缀提取
 
@@ -170,7 +190,7 @@ export function deleteUserApi(id: number): Promise<TApiResponse> {
 | 业务错误（`code !== 200`） | `request.ts` 统一提示 message 并 reject，调用方可 catch 补充分支 |
 | 表单提交错误               | 调用方 catch，回填表单错误信息                                   |
 
-- API 层（`src/api/xxx.ts`）不 catch 错误
+- API 层（`src/api/xxx.ts` 或 `src/api/<业务域>/xxx.ts`）不 catch 错误
 - 只在需要特殊处理的页面/组件内 catch
 
 ---

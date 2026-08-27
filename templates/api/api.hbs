@@ -1,42 +1,42 @@
 import type { TApiResponse } from '@/types/common'
 import type {
-  T{{pascalCase name}}CreateReq,
-  T{{pascalCase name}}Info,
-  T{{pascalCase name}}ListReq,
-  T{{pascalCase name}}ListResp,
-  T{{pascalCase name}}UpdateReq,
+  T{{pascalCase moduleName}}CreateReq,
+  T{{pascalCase moduleName}}Info,
+  T{{pascalCase moduleName}}ListReq,
+  T{{pascalCase moduleName}}ListResp,
+  T{{pascalCase moduleName}}UpdateReq,
 } from '@/types/{{name}}'
 
 import request from '@/utils/request'
 
 const PREFIX = '/{{name}}'
 
-export function fetch{{pascalCase name}}ListApi(
-  params: T{{pascalCase name}}ListReq,
-): Promise<T{{pascalCase name}}ListResp> {
-  return request.get<T{{pascalCase name}}ListResp>(`${PREFIX}/list`, { params })
+export function fetch{{pascalCase moduleName}}ListApi(
+  params: T{{pascalCase moduleName}}ListReq,
+): Promise<T{{pascalCase moduleName}}ListResp> {
+  return request.get<T{{pascalCase moduleName}}ListResp>(`${PREFIX}/list`, { params })
 }
 
-export function fetch{{pascalCase name}}DetailApi(
+export function fetch{{pascalCase moduleName}}DetailApi(
   id: number,
-): Promise<TApiResponse<T{{pascalCase name}}Info>> {
-  return request.get<TApiResponse<T{{pascalCase name}}Info>>(`${PREFIX}/${id}`)
+): Promise<TApiResponse<T{{pascalCase moduleName}}Info>> {
+  return request.get<TApiResponse<T{{pascalCase moduleName}}Info>>(`${PREFIX}/${id}`)
 }
 
-export function create{{pascalCase name}}Api(
-  data: T{{pascalCase name}}CreateReq,
-): Promise<TApiResponse<T{{pascalCase name}}Info>> {
-  return request.post<TApiResponse<T{{pascalCase name}}Info>>(PREFIX, data)
+export function create{{pascalCase moduleName}}Api(
+  data: T{{pascalCase moduleName}}CreateReq,
+): Promise<TApiResponse<T{{pascalCase moduleName}}Info>> {
+  return request.post<TApiResponse<T{{pascalCase moduleName}}Info>>(PREFIX, data)
 }
 
-export function update{{pascalCase name}}Api(
+export function update{{pascalCase moduleName}}Api(
   id: number,
-  data: T{{pascalCase name}}UpdateReq,
-): Promise<TApiResponse<T{{pascalCase name}}Info>> {
-  return request.put<TApiResponse<T{{pascalCase name}}Info>>(`${PREFIX}/${id}`, data)
+  data: T{{pascalCase moduleName}}UpdateReq,
+): Promise<TApiResponse<T{{pascalCase moduleName}}Info>> {
+  return request.put<TApiResponse<T{{pascalCase moduleName}}Info>>(`${PREFIX}/${id}`, data)
 }
 
-export function delete{{pascalCase name}}Api(
+export function delete{{pascalCase moduleName}}Api(
   id: number,
 ): Promise<TApiResponse> {
   return request.delete<TApiResponse>(`${PREFIX}/${id}`)

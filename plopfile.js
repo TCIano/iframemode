@@ -5,8 +5,18 @@ export default function (plop) {
   // ── API 模块 ──────────────────────────────────────────
   plop.setGenerator('api', {
     actions: (data) => {
-      const name = data?.name
-      if (!name) throw new Error('模块名不能为空')
+      const rawName = String(data?.name || '')
+        .trim()
+        .replace(/\\/g, '/')
+      const segments = rawName.split('/').filter(Boolean)
+      const moduleName = segments.at(-1)
+
+      if (!moduleName) throw new Error('模块名不能为空')
+
+      data.name = segments.join('/')
+      data.moduleName = moduleName
+      const exportPath = data.name
+
       return [
         {
           path: 'src/api/{{name}}.ts',
@@ -24,7 +34,7 @@ export default function (plop) {
           template: '',
           transform: (fileContent) => {
             // 去重追加：已存在同名 export 则不重复写入
-            const line = `export * from './${name}'\n`
+            const line = `export * from './${exportPath}'\n`
             return fileContent.includes(line)
               ? fileContent
               : fileContent.replace(/$/, line)
@@ -33,9 +43,14 @@ export default function (plop) {
         },
       ]
     },
-    description: '生成 API 模块（api/xxx.ts + types/xxx.ts）',
+    description:
+      '生成 API 模块（api/xxx.ts + types/xxx.ts，支持 domain/module）',
     prompts: [
-      { message: '模块名（如 report）：', name: 'name', type: 'input' },
+      {
+        message: '模块名（如 report 或 system/user）：',
+        name: 'name',
+        type: 'input',
+      },
     ],
   })
 
